@@ -22,6 +22,9 @@ jobs:
           dotnet-version: '6.0.x'
           include-prerelease: true
 
+      - name: show dir
+        run: ls
+
       - name: Build with dotnet
         run: dotnet build .\api\TrackByMyDuck\TrackByMyDuck.sln --configuration Release
 
