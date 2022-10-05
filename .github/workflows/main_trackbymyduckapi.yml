@@ -22,14 +22,11 @@ jobs:
           dotnet-version: '6.0.x'
           include-prerelease: true
 
-      - name: show dir
-        run: ls
-
       - name: Build with dotnet
         run: dotnet build .\api\TrackByMyDuck\TrackByMyDuck.sln --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish -c Release -o .\api\TrackByMyDuck\TrackByMyDuck.sln
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
