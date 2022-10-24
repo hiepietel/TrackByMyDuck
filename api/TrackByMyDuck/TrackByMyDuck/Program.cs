@@ -6,7 +6,7 @@ ConfigurationManager configuration = builder.Configuration;
 var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 // Add services to the container.
 builder.Services.AddControllers();
-
+//init
 //builder.Services.AddSingleton(SpotifyClientConfig.CreateDefault());
 //builder.Services.AddScoped<SpotifyClientBuilder>();
 builder.Services.AddCors(options =>
