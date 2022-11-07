@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SpotifyAPI.Web;
@@ -19,6 +21,7 @@ namespace TrackByMyDuck.Controllers
             _configuration = configuration;
         }
         [HttpPost]
+        
         public async Task<IActionResult> Login(UserSpotifyTokenDto init)
         {
             Console.WriteLine(init);
@@ -29,11 +32,11 @@ namespace TrackByMyDuck.Controllers
             var token = CreateToken(data.DisplayName, init.access_token);
             var cookieOptions = new CookieOptions
             {
-                HttpOnly = true,
+                //HttpOnly = true,
                 Expires = DateTime.Now.AddHours(1)
             };
             Response.Cookies.Append("refreshToken", token, cookieOptions);
-            return Ok(true);
+            return Ok(token);
         }
 
 
