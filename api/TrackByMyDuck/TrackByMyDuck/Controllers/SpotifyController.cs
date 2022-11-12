@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SpotifyAPI.Web;
-using SpotifyAPI.Web.Http;
-using Swan;
 using System.Security.Claims;
 
 namespace TrackByMyDuck.Controllers
