@@ -1,9 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-
-const api_url = "https://localhost:7292/";
-
 const instance = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
     // timeout: 1000,
@@ -35,12 +32,6 @@ const MainTab11 :React.FC= () => {
         })
     
     }
-  
-    // return (
-    //   <iframe {...props} ref={setContentRef}>
-    //     {mountNode && createPortal(children, mountNode)}
-    //   </iframe>
-    // )
   
     return (
       <div style={{height: "1000px"}}>MainTab
