@@ -5,7 +5,7 @@ import React, { useState } from "react";
 const api_url = "https://localhost:7292/";
 
 const instance = axios.create({
-    baseURL: api_url,
+    baseURL: process.env.REACT_APP_API_URL,
     // timeout: 1000,
     //headers = 
     //headers: new HttpHeaders().set("Authorization", "bearer BQDYhLLQv-daoM1vhdX2DzJ5DThBrbuzEis0WWdXDpCwvMkHkY…HJ0kY6PDJkdaz4zOFxLJOhP_UCe0D-US4voixjhitMHcH5Hgs")
@@ -20,7 +20,7 @@ const MainTab11 :React.FC= () => {
     const getMainPlaylist = () => {
   console.log(sessionStorage.getItem("token"));
         instance.defaults.headers.common['Authorization'] = unescape(encodeURIComponent(sessionStorage.getItem("token") ?? ""))
-      instance.get(api_url + "Spotify")
+      instance.get(process.env.REACT_APP_API_URL + "/Spotify")
         .then(res => {
           console.log(res.data)
           setData(res.data)
