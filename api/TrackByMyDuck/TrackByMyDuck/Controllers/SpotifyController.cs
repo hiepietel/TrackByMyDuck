@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Http;
 using Swan;
+using System.Security.Claims;
 
 namespace TrackByMyDuck.Controllers
 {
@@ -21,9 +22,9 @@ namespace TrackByMyDuck.Controllers
         [Authorize]
         public async Task<IActionResult> GetMainPlaylist()
         {
-
+            var a = User.Claims.Where(x => x.Type == ClaimTypes.UserData).ToList();
             var spotifyAccessToken = _configuration.GetSection("AppSettings:SpotifyToken").Value;
-            var spotify = new SpotifyClient(spotifyAccessToken);
+            var spotify = new SpotifyClient(a.FirstOrDefault().Value);
             //"https://open.spotify.com/playlist/3N7JOHotDn6MCp7nESgjf7?si=5247dfbd53914baf"
             //https://open.spotify.com/playlist/2plFn6cpqGu9e9JloPTTzp?si=7b302e87d57949c7
             string spotifyPlaylistId = _configuration.GetSection("AppSettings:SpotifyPlaylist").Value;
