@@ -1,5 +1,5 @@
 import React from 'react';
-import MainTab11 from './components/MainTab/MainTab';
+import MainTab11 from './components/MainTab/components/MainTab';
 import Login from './components/Auth/Login';
 import { BrowserRouter as Router, Routes, Route, Link, BrowserRouter } from "react-router-dom";
 
@@ -9,12 +9,11 @@ const REDIRECT_URL_AFTER_LOGIN ="http://localhost:3000"
 const SPACE_DELIMETER = "%20"
 const SCOPES = ["user-read-currently-playing", "user-read-playback-state", "playlist-modify-public"];
 const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMETER)
-const api_url = "https://localhost:7292/";
+
 
 
 const App :React.FC= () => {
   return (
-    <>
         <BrowserRouter>
       <Routes>
         <Route  path="/" element={<Login /> }/>
@@ -22,7 +21,6 @@ const App :React.FC= () => {
         <Route path="main" element={<MainTab11 />} />
       </Routes>
     </BrowserRouter>
-    </>
 
   );
 }

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 const SPACE_DELIMETER = "%20"
 const SCOPES = ["user-read-currently-playing", "user-read-playback-state", "playlist-modify-public"];
@@ -50,11 +51,17 @@ const Login :React.FC = () => {
       window.location.href = `${process.env.REACT_APP_SPOTIFY_AUTHORIZE_ENDPOINT}?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URL_AFTER_LOGIN}&scope=${SCOPES_URL_PARAM}&response_type=token&show_dialog=true`
     }
     return (
-      <>
-        <header className="App-header">
-        <button onClick={handleLogin} >Login</button>
-        </header>
-      </>
+      <div style={{height: "100vh", width: "100%", backgroundColor: "#8C92AC", top: 0, left: 0, position: "fixed"}}>
+        <div style={{textAlign: "center"}}>
+          <h1>Log in to track by my duck</h1>
+          <Button variant="contained"
+              onClick={handleLogin}>
+                Login
+          </Button>
+        </div>
+
+      </div>
+
     );
 }
 

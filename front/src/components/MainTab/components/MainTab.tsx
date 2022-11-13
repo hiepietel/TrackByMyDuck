@@ -1,5 +1,9 @@
+import { Pagination, Paper, Stack, styled, Table, TableBody, TableContainer, TableRow } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
+import Layout from "../../Common/components/Layout";
+import { ISpotifyTrack } from "../interfaces/ISpotifyTrack";
+import TrackTile from "./TrackTile";
 
 const instance = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
@@ -8,6 +12,14 @@ const instance = axios.create({
     //headers: new HttpHeaders().set("Authorization", "bearer BQDYhLLQv-daoM1vhdX2DzJ5DThBrbuzEis0WWdXDpCwvMkHkY…HJ0kY6PDJkdaz4zOFxLJOhP_UCe0D-US4voixjhitMHcH5Hgs")
   });
   
+  const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  }));
+
 const MainTab11 :React.FC= () => {
 
     const [data, setData] = useState<any[]>([]);
@@ -22,10 +34,13 @@ const MainTab11 :React.FC= () => {
           console.log(res.data)
           setData(res.data)
   
-          var ids :number[]= []
-          res.data.map((x:any) => {
-            console.log(x.id)
-            ids.push(x.id)
+          var ids :ISpotifyTrack[]= []
+          res.data.map((x:ISpotifyTrack) => {
+            console.log(x.spotifyId)
+            ids.push({
+              spotifyId: x.spotifyId,
+            addedBy: x.addedBy,
+          addedDate: x.addedDate})
            })
            console.log(ids);
           setData(ids)
@@ -34,22 +49,35 @@ const MainTab11 :React.FC= () => {
     }
   
     return (
-      <div style={{height: "1000px"}}>MainTab
-        <button onClick={() => {
+      <Stack
+  direction="column"
+  justifyContent="space-evenly"
+  alignItems="stretch"
+  spacing={1}
+>
+  <Item>  <button onClick={() => {
           getMainPlaylist();
           console.log(data);
         }
         } >
           Click me
-          </button>
-            
-         <h1>{data.length > 0 ? data.map((x:number)=> {
+          </button></Item>
+            <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 500 }} aria-label="simple table">
+      <TableBody>
+  
+        {data.length > 0 ? data.map((x:ISpotifyTrack)=> {
           console.log(x);
-          return spotifyWiget(x) }): <></>}</h1> 
-         By
-        {/* {data != undefined ? data : data.} */}
-      </div>
-      
+          return <TableRow>
+            <TrackTile spotifyId={x.spotifyId} addedBy={x.addedBy}/>
+            </TableRow> }): <></>}
+        </TableBody>
+        </Table>
+        <Pagination count={10} />
+      </TableContainer>
+
+         <Layout /> 
+      </Stack> 
     )
   }
 
@@ -60,7 +88,7 @@ const MainTab11 :React.FC= () => {
         //style = {{style:"border-radius:12px"}} 
         src={link}
         width="100%" 
-        height="152" 
+        height="122" 
         frameBorder="0" 
         //allowFullScreen="" 
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 

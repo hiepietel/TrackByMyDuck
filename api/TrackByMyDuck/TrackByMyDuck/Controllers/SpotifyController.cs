@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SpotifyAPI.Web;
 using System.Security.Claims;
+using TrackByMyDuck.DTO;
 
 namespace TrackByMyDuck.Controllers
 {
@@ -26,7 +27,7 @@ namespace TrackByMyDuck.Controllers
             //"https://open.spotify.com/playlist/3N7JOHotDn6MCp7nESgjf7?si=5247dfbd53914baf"
             //https://open.spotify.com/playlist/2plFn6cpqGu9e9JloPTTzp?si=7b302e87d57949c7
             string spotifyPlaylistId = _configuration.GetSection("AppSettings:SpotifyPlaylist").Value;
-            var tracks = new List<object>();
+            var tracks = new List<SpotifyTrackDto>();
             var playlist = await spotify.Playlists.GetItems(spotifyPlaylistId);
 
             if (playlist == null || playlist.Items == null)
@@ -35,7 +36,13 @@ namespace TrackByMyDuck.Controllers
             }
             foreach (var playlistItem in playlist?.Items)
             {
-                tracks.Add(playlistItem.Track);
+                var obj = (FullTrack)playlistItem.Track;
+                tracks.Add(new SpotifyTrackDto()
+                {
+                    AddedBy = playlistItem.AddedBy.Id,
+                    AddedDate = playlistItem.AddedAt.Value,
+                    SpotifyId = obj.Id
+                });
             }
             
 
