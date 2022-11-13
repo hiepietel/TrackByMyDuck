@@ -2,7 +2,6 @@ import React from 'react';
 import MainTab11 from './components/MainTab/components/MainTab';
 import Login from './components/Auth/Login';
 import { BrowserRouter as Router, Routes, Route, Link, BrowserRouter } from "react-router-dom";
-import UploadTrack from './components/UploadTrack/components/UploadTrack';
 
 const CLIENT_ID= "6de1c633b2044d088199775ad798e1e6"
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize"
@@ -18,7 +17,7 @@ const App :React.FC= () => {
         <BrowserRouter>
       <Routes>
         <Route  path="/" element={<Login /> }/>
-        <Route path="add" element={<UploadTrack />} /> 
+        <Route path="login" element={<Login />} /> 
         <Route path="main" element={<MainTab11 />} />
       </Routes>
     </BrowserRouter>
@@ -40,7 +39,7 @@ const Layout :React.FC = (data) => {
             <Link to="/main">Main</Link>
           </li>
           <li>
-            <Link to="/add">Login</Link>
+            <Link to="/login">Login</Link>
           </li>
         </ul>
       </nav>
