@@ -1,4 +1,4 @@
-import { Pagination, Paper, Stack, styled, Table, TableBody, TableContainer, TableRow } from "@mui/material";
+import { Button, Pagination, Paper, Stack, styled, Table, TableBody, TableContainer, TableRow } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import Layout from "../../Common/components/Layout";
@@ -54,29 +54,31 @@ const MainTab11 :React.FC= () => {
   justifyContent="space-evenly"
   alignItems="stretch"
   spacing={1}
->
-  <Item>  <button onClick={() => {
+><Layout /> 
+  <Item>  <Button onClick={() => {
           getMainPlaylist();
           console.log(data);
         }
         } >
-          Click me
-          </button></Item>
-            <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label="simple table">
+          Show playlist
+          </Button>
+          
+          </Item>
+          {data.length > 0 ?
+            <TableContainer  component={Paper} sx={{alignContent:"center"}}>
+      <Table sx={{ minWidth: 500, alignSelf: "center", width:"100%"}} aria-label="simple table">
       <TableBody>
   
-        {data.length > 0 ? data.map((x:ISpotifyTrack)=> {
-          console.log(x);
-          return <TableRow>
+         {data.map((x:ISpotifyTrack)=> {
+          return <TableRow sx={{ minWidth: 500, alignItems: "center", width:"100%"}}>
             <TrackTile spotifyId={x.spotifyId} addedBy={x.addedBy}/>
-            </TableRow> }): <></>}
+            </TableRow> 
+                })}
         </TableBody>
         </Table>
-        <Pagination count={10} />
       </TableContainer>
-
-         <Layout /> 
+: <></>}
+         
       </Stack> 
     )
   }

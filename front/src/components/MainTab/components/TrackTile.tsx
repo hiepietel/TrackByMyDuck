@@ -9,9 +9,9 @@ interface ITrackTileProps {
 
 const TrackTile :React.FC<ITrackTileProps>= ({spotifyId, addedBy}) => {
   return (
-    <Card sx={{ maxWidth: 345 }} square={true}>
+    <Card sx={{ textAlign:"center", marginLeft: "10vh", marginRight:"10vh", paddingBottom:"1vh" }}>
       <CardContent>
-      <Typography gutterBottom variant="body1" component="div">
+      <Typography variant="body1" component="div">
       Added by {addedBy}
       </Typography>
         {spotifyWiget(spotifyId)}</CardContent>
