@@ -13,6 +13,11 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.5" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0" />
+    <PackageReference Include="SyrianBallaS.AutoMapper.Extensions.Microsoft.DependencyInjection.Signed" Version="3.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TrackByMyDuck.Application\TrackByMyDuck.Application.csproj" />
   </ItemGroup>
 
 </Project>
