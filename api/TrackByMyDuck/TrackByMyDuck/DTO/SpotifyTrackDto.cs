@@ -1,4 +1,4 @@
-﻿namespace TrackByMyDuck.Dtos
+﻿namespace TrackByMyDuck.DTO
 {
     public class SpotifyTrackDto
     {

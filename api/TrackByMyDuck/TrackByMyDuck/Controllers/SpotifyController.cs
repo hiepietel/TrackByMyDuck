@@ -1,11 +1,8 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SpotifyAPI.Web;
 using System.Security.Claims;
-using TrackByMyDuck.Core.Interfaces;
-using TrackByMyDuck.Dtos;
-using TrackByMyDuck.Queries.Spotify;
+using TrackByMyDuck.DTO;
 
 namespace TrackByMyDuck.Controllers
 {
@@ -14,27 +11,12 @@ namespace TrackByMyDuck.Controllers
     public class SpotifyController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly ISpotifyService _spotifyService;
-        private readonly IMapper _mapper;
-        public SpotifyController(IConfiguration configuration, ISpotifyService spotifyService, IMapper mapper)
+        public SpotifyController(IConfiguration configuration)
         {
             _configuration = configuration;
-            _spotifyService = spotifyService;
-            _mapper = mapper;
+
         }
 
-        [HttpGet]
-        [Authorize]
-        [Route("v2")]
-        public async Task<IActionResult> GetMainPlaylist1()
-        {
-            var a = User.Claims.Where(x => x.Type == ClaimTypes.UserData).ToList();
-            string spotifyPlaylistId = _configuration.GetSection("AppSettings:SpotifyPlaylist").Value;
-
-            var response = await _spotifyService.GetTracksFromPlaylist(a.FirstOrDefault().Value, spotifyPlaylistId);
-            
-            return Ok(_mapper.Map<SpotifyTrackDto>(response));
-        }
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> GetMainPlaylist()
@@ -67,14 +49,14 @@ namespace TrackByMyDuck.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> AddTrack([FromBody] AddTrackQuery query)
+        public async Task<IActionResult> AddTrack([FromBody] Input input)
         {
             //https://open.spotify.com/album/4utVyX1HOqeMkUeeHijTUT?si=J0oxH7bGRlOkGMCjx0SuTA
             //https://open.spotify.com/track/1301WleyT98MSxVHPZCA6M?si=ef668b83df3e480f
             //1301WleyT98MSxVHPZCA6M
             //https://open.spotify.com/track/47rKwYHKChKwrw7503T2Bp?si=255a215795b74097
             //"spotify:track:47rKwYHKChKwrw7503T2Bp"
-            var ad = query.Link.Split("/")[4].Split("?")[0];
+            var ad = input.Link.Split("/")[4].Split("?")[0];
                // 
             //var spotifyAccessToken = _configuration.GetSection("AppSettings:SpotifyToken").Value;
             //var asd = Response.Cookies;
@@ -82,8 +64,14 @@ namespace TrackByMyDuck.Controllers
             var PlayListSporti = new PlaylistAddItemsRequest(new List<string>() { "spotify:track:"+ ad });
             var spotify = new SpotifyClient(a.FirstOrDefault().Value);
             string spotifyPlaylistId = _configuration.GetSection("AppSettings:SpotifyPlaylist").Value;
+            var addded = await spotify.Playlists.Get(spotifyPlaylistId);
             var addded1 = await spotify.Playlists.AddItems(spotifyPlaylistId, PlayListSporti);
             return Ok(ad);
+        }
+
+        public class Input
+        {
+            public string Link { get; set; }
         }
     }
 }
