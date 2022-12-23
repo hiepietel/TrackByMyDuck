@@ -9,6 +9,8 @@ namespace TrackByMyDuck.Core.Interfaces
 {
     public interface ISpotifyService
     {
+        Task CheckSpotifyTrack(string spotifyId);
+
         Task<List<SpotifyTrack>> GetTracksFromPlaylist(string spotifyUserToken, string spotifyPlaylistId);
     }
 }

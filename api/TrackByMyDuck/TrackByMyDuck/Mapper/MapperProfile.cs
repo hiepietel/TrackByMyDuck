@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using TrackByMyDuck.Application.Features.Tracks.Queries.GetShowTrack;
 using TrackByMyDuck.Core.SpotifyEntities;
+using TrackByMyDuck.Domain.Entities;
 using TrackByMyDuck.Dtos;
 
 namespace TrackByMyDuck.Mapper
@@ -9,7 +11,7 @@ namespace TrackByMyDuck.Mapper
         public MapperProfile()
         {
             CreateMap<SpotifyTrack, SpotifyTrackDto>();
-           // CreateMap<ShowTr, SpotifyTrackDto>();
+            CreateMap<Track, ShowTrackVm>();
         }
         
     }

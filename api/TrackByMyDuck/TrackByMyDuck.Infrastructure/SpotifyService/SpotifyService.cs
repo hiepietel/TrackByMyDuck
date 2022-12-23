@@ -14,6 +14,10 @@ namespace TrackByMyDuck.Application.Services
 {
     public class SpotifyService: ISpotifyService
     {
+        public Task CheckSpotifyTrack(string spotifyId)
+        {
+            throw new NotImplementedException();
+        }
 
         public async Task<List<SpotifyTrack>> GetTracksFromPlaylist(string spotifyUserToken, string spotifyPlaylistId)
         {

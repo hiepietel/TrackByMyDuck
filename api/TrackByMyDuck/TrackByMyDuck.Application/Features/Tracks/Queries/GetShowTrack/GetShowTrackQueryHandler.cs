@@ -18,10 +18,7 @@ namespace TrackByMyDuck.Application.Features.Tracks.Queries.GetShowTrack
         public async Task<ShowTrackVm> Handle(GetShowTrackQuery request, CancellationToken cancellationToken)
         {
             var showTrack = await _trackRepository.GetShowTrack();
-            return new ShowTrackVm()
-            {
-                SpotifyId = showTrack.SpotifyId
-            };
+            return _mapper.Map<ShowTrackVm>(showTrack);
         }
     }
 }
