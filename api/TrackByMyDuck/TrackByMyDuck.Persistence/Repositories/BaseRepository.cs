@@ -5,13 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrackByMyDuck.Application.Contracts.Persistence;
+using TrackByMyDuck.Domain.Entities;
 
 namespace TrackByMyDuck.Persistence.Repositories
 {
     public class BaseRepository<T> : IAsyncRepository<T> where T : class
     {
-        protected readonly TruckByMyDuckContext _dbContext;
-        public BaseRepository(TruckByMyDuckContext dbContext)
+        protected readonly TrackByMyDuckContext _dbContext;
+        public BaseRepository(TrackByMyDuckContext dbContext)
         {
             _dbContext = dbContext;
         }

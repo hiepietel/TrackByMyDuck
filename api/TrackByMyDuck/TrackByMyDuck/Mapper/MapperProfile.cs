@@ -9,6 +9,7 @@ namespace TrackByMyDuck.Mapper
         public MapperProfile()
         {
             CreateMap<SpotifyTrack, SpotifyTrackDto>();
+           // CreateMap<ShowTr, SpotifyTrackDto>();
         }
         
     }
