@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrackByMyDuck.Application.Contracts.Persistence;
 using TrackByMyDuck.Core.Interfaces;
+using TrackByMyDuck.Domain.Entities;
 
 namespace TrackByMyDuck.Application.Features.Tracks.Commands.AddTrack
 {
@@ -15,16 +17,25 @@ namespace TrackByMyDuck.Application.Features.Tracks.Commands.AddTrack
         private readonly IConfiguration _configuration;
         private readonly ISpotifyService _spotifyService;
         private readonly IMapper _mapper;
+        private readonly ISpotifyLinkExtractorService _spotifyLinkExtractorService;
+        private readonly ITrackRepository _trackRepository;
 
-        public AddTrackCommandHandler(IConfiguration configuration, ISpotifyService spotifyService, IMapper mapper)
+        public AddTrackCommandHandler(IConfiguration configuration, ISpotifyService spotifyService, IMapper mapper, ISpotifyLinkExtractorService spotifyLinkExtractorService)
         {
             _configuration = configuration;
             _spotifyService = spotifyService;
             _mapper = mapper;
+            _spotifyLinkExtractorService = spotifyLinkExtractorService;
         }
-        public Task<bool> Handle(AddTrackCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(AddTrackCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+
+            var spotifyTrackId = await _spotifyLinkExtractorService.GetSpotifyIdFromLink(request.Link);
+            var track = await _spotifyService.CheckTrackFromSpotifyId(spotifyTrackId);
+
+            var showTrack = await _trackRepository.AddAsync(_mapper.Map<Track>(track));
+
+            return true;
         }
     }
 }

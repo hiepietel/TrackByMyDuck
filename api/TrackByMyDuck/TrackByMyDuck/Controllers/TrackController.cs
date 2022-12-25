@@ -17,19 +17,19 @@ namespace TrackByMyDuck.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddTrack()
+        [HttpPost(Name = "AddTrack")]
+        public async Task<IActionResult> AddTrack([FromBody]AddTrackCommand request)
         {
-            var result = await _mediator.Send(new GetShowTrackQuery());
-            return Ok();
+            var result = await _mediator.Send(request);
+            return Ok(result);
         }
 
-        [HttpGet("/get-show-track", Name = "GetShowTrack")]
+        [HttpGet("get-show-track", Name = "GetShowTrack")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> GetShowTrack()
         {
-            var result = await _mediator.Send(new AddTrackCommand());
+            var result = await _mediator.Send(new GetShowTrackQuery());
             return Ok(result);
         }
     }

@@ -6,9 +6,8 @@ namespace TrackByMyDuck.Application.Features.Tracks.Queries.GetShowTrack
 {
     public class GetShowTrackQueryHandler : IRequestHandler<GetShowTrackQuery, ShowTrackVm>
     {
-
-        public ITrackRepository _trackRepository;
-        public IMapper _mapper;
+        private readonly ITrackRepository _trackRepository;
+        private readonly IMapper _mapper;
         public GetShowTrackQueryHandler(IMapper mapper, ITrackRepository trackRepository)
         {
             _mapper = mapper;

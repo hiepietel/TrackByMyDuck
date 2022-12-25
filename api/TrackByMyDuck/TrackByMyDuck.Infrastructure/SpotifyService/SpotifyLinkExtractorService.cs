@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TrackByMyDuck.Core.Interfaces;
-
+﻿using TrackByMyDuck.Core.Interfaces;
 namespace TrackByMyDuck.Application.Services
 {
     public class SpotifyLinkExtractorService : ISpotifyLinkExtractorService
     {
-        public Task<string> IsValidSpotifyTackLink(string spotifyTrackLink)
+        public async Task<string> GetSpotifyIdFromLink(string spotifyTrackLink)
         {
-            throw new NotImplementedException();
+            var res = spotifyTrackLink.Split("/")[4].Split("?")[0];
+
+            return res;
         }
     }
 }

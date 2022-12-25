@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using SpotifyAPI;
-using SpotifyAPI.Web;
+﻿using SpotifyAPI.Web;
 using TrackByMyDuck.Core.Interfaces;
 using TrackByMyDuck.Core.SpotifyEntities;
 
@@ -14,9 +6,18 @@ namespace TrackByMyDuck.Application.Services
 {
     public class SpotifyService: ISpotifyService
     {
-        public Task CheckSpotifyTrack(string spotifyId)
+        public async Task<FullTrack> CheckTrackFromSpotifyId(string spotifyId)
         {
-            throw new NotImplementedException();
+
+            var config = SpotifyClientConfig.CreateDefault();
+
+            var request = new ClientCredentialsRequest("", "");
+            var response = await new OAuthClient(config).RequestToken(request);
+
+            var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
+
+            var track = await spotify.Tracks.Get(spotifyId);
+            return track;
         }
 
         public async Task<List<SpotifyTrack>> GetTracksFromPlaylist(string spotifyUserToken, string spotifyPlaylistId)
