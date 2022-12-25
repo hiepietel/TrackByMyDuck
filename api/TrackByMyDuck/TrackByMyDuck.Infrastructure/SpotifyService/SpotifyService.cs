@@ -1,12 +1,12 @@
 ﻿using SpotifyAPI.Web;
+using TrackByMyDuck.Application.Models.Spotify;
 using TrackByMyDuck.Core.Interfaces;
-using TrackByMyDuck.Core.SpotifyEntities;
 
 namespace TrackByMyDuck.Application.Services
 {
     public class SpotifyService: ISpotifyService
     {
-        public async Task<FullTrack> CheckTrackFromSpotifyId(string spotifyId)
+        public async Task<SpotifyTrack> CheckTrackFromSpotifyId(string spotifyId)
         {
 
             var config = SpotifyClientConfig.CreateDefault();
@@ -17,7 +17,7 @@ namespace TrackByMyDuck.Application.Services
             var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
 
             var track = await spotify.Tracks.Get(spotifyId);
-            return track;
+            return null;
         }
 
         public async Task<List<SpotifyTrack>> GetTracksFromPlaylist(string spotifyUserToken, string spotifyPlaylistId)
@@ -40,9 +40,9 @@ namespace TrackByMyDuck.Application.Services
                 var obj = (FullTrack)playlistItem.Track;
                 tracks.Add(new SpotifyTrack()
                 {
-                    AddedBy = playlistItem.AddedBy.Id,
-                    AddedDate = playlistItem.AddedAt.Value,
-                    SpotifyId = obj.Id
+                    //AddedBy = playlistItem.AddedBy.Id,
+                    //AddedDate = playlistItem.AddedAt.Value,
+                    //SpotifyId = obj.Id
                 });
             }
             return tracks;

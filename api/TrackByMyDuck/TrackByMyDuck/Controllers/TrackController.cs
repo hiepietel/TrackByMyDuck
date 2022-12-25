@@ -9,7 +9,6 @@ namespace TrackByMyDuck.Controllers
     [Route("api/[controller]")]
     public class TrackController : ControllerBase
     {
-
         private readonly IMediator _mediator;
 
         public TrackController(IMediator mediator)
