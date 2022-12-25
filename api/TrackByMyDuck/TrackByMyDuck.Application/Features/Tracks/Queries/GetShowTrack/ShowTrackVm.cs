@@ -1,6 +1,6 @@
-﻿namespace TrackByMyDuck.Domain.Entities
+﻿namespace TrackByMyDuck.Application.Features.Tracks.Queries.GetShowTrack
 {
-    public class Track
+    public class ShowTrackVm
     {
         public int Id { get; set; }
         public string SpotifyId { get; set; }
