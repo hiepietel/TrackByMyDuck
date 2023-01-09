@@ -2,7 +2,7 @@
 
 namespace TrackByMyDuck.Application.Features.Tracks.Queries.GetShowTrack
 {
-    public class GetShowTrackQuery: IRequest<ShowTrackVm>
+    public class GetTracksQuery: IRequest<ShowTrackVm>
     {
     }
 }

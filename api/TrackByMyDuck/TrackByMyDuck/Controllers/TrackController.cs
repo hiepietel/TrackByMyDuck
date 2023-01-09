@@ -16,7 +16,18 @@ namespace TrackByMyDuck.Controllers
             _mediator = mediator;
         }
 
+        [HttpGet(Name = "GetAllEvents")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult<object>> GetAllTrack()
+        {
+            var result = await _mediator.Send(new );
+            return Ok(result);
+                }
+
         [HttpPost(Name = "AddTrack")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> AddTrack([FromBody]AddTrackCommand request)
         {
             var result = await _mediator.Send(request);
@@ -28,7 +39,7 @@ namespace TrackByMyDuck.Controllers
         [ProducesDefaultResponseType]
         public async Task<IActionResult> GetShowTrack()
         {
-            var result = await _mediator.Send(new GetShowTrackQuery());
+            var result = await _mediator.Send(new GetTracksQuery());
             return Ok(result);
         }
     }

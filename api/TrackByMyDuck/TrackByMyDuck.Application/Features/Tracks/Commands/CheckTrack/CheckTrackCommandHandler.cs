@@ -8,35 +8,29 @@ using System.Text;
 using System.Threading.Tasks;
 using TrackByMyDuck.Application.Contracts.Persistence;
 using TrackByMyDuck.Core.Interfaces;
-using TrackByMyDuck.Domain.Entities;
 
-namespace TrackByMyDuck.Application.Features.Tracks.Commands.AddTrack
+namespace TrackByMyDuck.Application.Features.Tracks.Commands.CheckTrack
 {
-    public class AddTrackCommandHandler : IRequestHandler<AddTrackCommand, bool>
+    public class CheckTrackCommandHandler : IRequestHandler<CheckTrackCommand, string>
     {
         private readonly IConfiguration _configuration;
         private readonly ISpotifyService _spotifyService;
         private readonly IMapper _mapper;
         private readonly ISpotifyLinkExtractorService _spotifyLinkExtractorService;
         private readonly ITrackRepository _trackRepository;
-
-        public AddTrackCommandHandler(IConfiguration configuration, ISpotifyService spotifyService, IMapper mapper, ISpotifyLinkExtractorService spotifyLinkExtractorService, ITrackRepository trackRepository)
+        public CheckTrackCommandHandler(IConfiguration configuration, ISpotifyService spotifyService, IMapper mapper, ISpotifyLinkExtractorService spotifyLinkExtractorService, ITrackRepository trackRepository)
         {
-            _configuration = configuration;
             _spotifyService = spotifyService;
             _mapper = mapper;
             _spotifyLinkExtractorService = spotifyLinkExtractorService;
-            _trackRepository = trackRepository;
         }
-        public async Task<bool> Handle(AddTrackCommand request, CancellationToken cancellationToken)
-        {
 
+        public async Task<string> Handle(CheckTrackCommand request, CancellationToken cancellationToken)
+        {
             var spotifyTrackId = await _spotifyLinkExtractorService.GetSpotifyIdFromLink(request.Link);
             var track = await _spotifyService.CheckTrackFromSpotifyId(spotifyTrackId);
 
-            var showTrack = await _trackRepository.AddAsync(_mapper.Map<Track>(track));
-
-            return true;
+            return spotifyTrackId;
         }
     }
 }

@@ -4,7 +4,7 @@ using TrackByMyDuck.Application.Contracts.Persistence;
 
 namespace TrackByMyDuck.Application.Features.Tracks.Queries.GetShowTrack
 {
-    public class GetShowTrackQueryHandler : IRequestHandler<GetShowTrackQuery, ShowTrackVm>
+    public class GetShowTrackQueryHandler : IRequestHandler<GetTracksQuery, ShowTrackVm>
     {
         private readonly ITrackRepository _trackRepository;
         private readonly IMapper _mapper;
@@ -14,7 +14,7 @@ namespace TrackByMyDuck.Application.Features.Tracks.Queries.GetShowTrack
             _trackRepository = trackRepository;
         }
 
-        public async Task<ShowTrackVm> Handle(GetShowTrackQuery request, CancellationToken cancellationToken)
+        public async Task<ShowTrackVm> Handle(GetTracksQuery request, CancellationToken cancellationToken)
         {
             var showTrack = await _trackRepository.GetShowTrack();
             return _mapper.Map<ShowTrackVm>(showTrack);
