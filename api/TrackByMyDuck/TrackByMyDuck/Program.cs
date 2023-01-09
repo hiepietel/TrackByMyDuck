@@ -31,20 +31,24 @@ builder.Services.AddSwaggerGen(options =>
 
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-                .GetBytes(configuration.GetSection("AppSettings:Token").Value)
-            ),
-            ValidateIssuer = false,
-            ValidateAudience = false,
-        };
-    });
-
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//    .AddJwtBearer(options =>
+//    {
+//        options.TokenValidationParameters = new TokenValidationParameters
+//        {
+//            ValidateIssuerSigningKey = true,
+//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+//                .GetBytes(configuration.GetSection("AppSettings:Token").Value)
+//            ),
+//            ValidateIssuer = false,
+//            ValidateAudience = false,
+//        };
+//    });
+builder.Services.AddAuthentication().AddFacebook(facebookOptions =>
+{
+    facebookOptions.AppId = "!@";//configuration["Authentication:Facebook:AppId"];
+    facebookOptions.AppSecret = "ADASD";// configuration["Authentication:Facebook:AppSecret"];
+});
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: myAllowSpecificOrigins,

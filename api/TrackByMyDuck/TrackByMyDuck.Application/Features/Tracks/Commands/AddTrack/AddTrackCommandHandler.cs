@@ -20,12 +20,13 @@ namespace TrackByMyDuck.Application.Features.Tracks.Commands.AddTrack
         private readonly ISpotifyLinkExtractorService _spotifyLinkExtractorService;
         private readonly ITrackRepository _trackRepository;
 
-        public AddTrackCommandHandler(IConfiguration configuration, ISpotifyService spotifyService, IMapper mapper, ISpotifyLinkExtractorService spotifyLinkExtractorService)
+        public AddTrackCommandHandler(IConfiguration configuration, ISpotifyService spotifyService, IMapper mapper, ISpotifyLinkExtractorService spotifyLinkExtractorService, ITrackRepository trackRepository)
         {
             _configuration = configuration;
             _spotifyService = spotifyService;
             _mapper = mapper;
             _spotifyLinkExtractorService = spotifyLinkExtractorService;
+            _trackRepository = trackRepository;
         }
         public async Task<bool> Handle(AddTrackCommand request, CancellationToken cancellationToken)
         {
