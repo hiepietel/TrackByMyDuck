@@ -1,64 +1,112 @@
-import { Button, TextField } from '@mui/material'
-import axios from 'axios';
 import React, { useState } from 'react'
-import Layout from '../../Common/components/Layout'
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
+import Container from '@material-ui/core/Container'
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
+import { makeStyles } from '@material-ui/core'
+import TextField from '@material-ui/core/TextField'
+import axios from 'axios';
+import TrackCard from './TrackCard'
+import { useNavigate } from 'react-router-dom'
+const useStyles = makeStyles({
+    field: {
+      marginTop: 20,
+      marginBottom: 20,
+      display: 'block'
+    }
+  })
+  
+  const instance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+  });
 
+const UploadTrack:React.FC = () => {
+    const history = useNavigate ()
+    const classes = useStyles()
+  //const history = history()
+  const [title, setTitle] = useState('')
+  const [titleError, setTitleError] = useState(false)
 
-const instance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
-});
-
-
-const UploadTrack = () => {
-  const [color, setColor] = useState<string | undefined>(undefined)
-  const [spotifyId, setSpotifyId] = useState<string | undefined>(undefined)
-  const getMainPlaylist = () => {
-    console.log(sessionStorage.getItem("token"));
-          instance.defaults.headers.common['Authorization'] = unescape(encodeURIComponent(sessionStorage.getItem("token") ?? ""))
-        instance.post(process.env.REACT_APP_API_URL + "/Spotify",{link:color})
+  const [isTrackValidated, setTrackValidated] = useState(false);
+  const [track, setTrack] = useState<any>({});
+  const getMainPlaylist = (link: string) => {
+    //console.log(sessionStorage.getItem("token"));
+          //instance.defaults.headers.common['Authorization'] = unescape(encodeURIComponent(sessionStorage.getItem("token") ?? ""))
+        instance.post(process.env.REACT_APP_API_URL + "/api/Track/check-track",{Link:title})
           .then(res => {
             console.log(res.data)
-            setSpotifyId(res.data)
+            setTrack(res.data)
+            setTrackValidated(true);
           })
           .catch(err => {
             console.log(err);
           });
-          }
-        
 
+    }
+  
+  const handleSubmit = () => {
+    console.log();
+    if(title != ""){
+        instance.post(process.env.REACT_APP_API_URL + "/api/Track",{Link:title})
+        .then(res => {
+            history("main")
+          console.log(res.data)
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }    
+  }
+  
   return (
-    <>    
-      <Layout/>
-      Paste link to track here < br />
-      <TextField onChange={(event:any) => setColor(event.target.value)} id="outlined-basic" label="Outlined" variant="outlined" />< br />
-      {color ? <p>Your link: {color}</p> : <></> }
-      <Button onClick={()=>{getMainPlaylist()}}>Check</Button>
-      {spotifyId ? 
-      <>
-      <p>You added: </p>
-      {spotifyWiget(spotifyId)} 
-      </>
-      : <></>}
-    </>
+  <Container >
+      <Typography
+        variant="h6" 
+        color="textSecondary"
+        component="h2"
+        gutterBottom
+      >
+        Upload track to trackByMyDuck
+      </Typography>
+      
+      <form noValidate autoComplete="off" onSubmit={handleSubmit}>
 
+        {isTrackValidated == false ? 
+          <>
+            <TextField className={classes.field}
+              onChange={(e) => { setTitle(e.target.value) }}
+              label="Track link" 
+              variant="outlined" 
+              color="secondary" 
+              fullWidth
+              required
+              error={titleError}
+            />
+            <Button
+              //type="submit" 
+              color="secondary" 
+              variant="contained"
+              onClick={(e: any) => {getMainPlaylist(e.target.value);}}
+              //endIcon={<KeyboardArrowRightIcon />}
+              >
+                Check link
+            </Button>
+          </>
+        :
+          <>
+            <TrackCard track={track}/>
+            <Button
+              type="submit" 
+              color="secondary" 
+              variant="contained"
+            >
+              Add 
+            </Button>
+          </>
+         }
+      </form>     
+    </Container>
   )
 }
 
 export default UploadTrack
-
-const spotifyWiget = (id:string) => {
-  const  link ="".concat("https://open.spotify.com/embed/track/",id,"?utm_source=generator") 
-  console.log(link);
-  return <iframe  
-      //style = {{style:"border-radius:12px"}} 
-      src={link}
-      width="100%" 
-      height="122" 
-      frameBorder="0" 
-      //allowFullScreen="" 
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-      loading="lazy">
-
-    </iframe>
-  
-}

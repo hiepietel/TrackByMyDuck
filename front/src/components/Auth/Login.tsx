@@ -13,6 +13,7 @@ const instance = axios.create({
 
 
 const getReurnedParamsFromSpotifyAuth = (hash:any) => {
+  console.log(hash)
   const stringAfterHashtah = hash.substring(1);
   const paramsInUrl = stringAfterHashtah.split("&");
   const paramsPLitUp = paramsInUrl.reduce((accumulater:any, currentValue:any) => {
@@ -41,6 +42,7 @@ const Login :React.FC = () => {
     useEffect(() => {
         console.log(window.location.hash)
       if(window.location.hash){
+        console.log(window.location.href);
         var token = getReurnedParamsFromSpotifyAuth(window.location.hash);
         logiToApi(token)
         navigate("/main")

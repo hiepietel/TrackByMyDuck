@@ -12,7 +12,7 @@ namespace TrackByMyDuck.UnitTests
         [Test]
         public async Task Test1()
         {
-            var spotifyService = new SpotifyService();
+            var spotifyService = new SpotifyService(null);
             var result = await spotifyService.GetTracksFromPlaylist(Configuration.SpotifyToken, Configuration.SpotifyPlaylistId);
 
             Assert.Pass();
