@@ -1,4 +1,6 @@
-﻿using SpotifyAPI.Web;
+﻿using Microsoft.Extensions.Configuration;
+using SpotifyAPI.Web;
+using System.Security.Cryptography.X509Certificates;
 using TrackByMyDuck.Application.Models.Spotify;
 using TrackByMyDuck.Core.Interfaces;
 
@@ -6,18 +8,36 @@ namespace TrackByMyDuck.Application.Services
 {
     public class SpotifyService: ISpotifyService
     {
+        private readonly IConfiguration _configuration;
+        public SpotifyService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         public async Task<SpotifyTrack> CheckTrackFromSpotifyId(string spotifyId)
         {
 
             var config = SpotifyClientConfig.CreateDefault();
-
-            var request = new ClientCredentialsRequest("", "");
+            var clientId = _configuration.GetSection("Spotify:ClientId")?.Value;
+            var clientSecret = _configuration.GetSection("Spotify:ClientSecret")?.Value;
+            var request = new ClientCredentialsRequest(clientId, clientSecret);
             var response = await new OAuthClient(config).RequestToken(request);
 
             var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
 
             var track = await spotify.Tracks.Get(spotifyId);
-            return null;
+
+            var artists = track.Artists.Select(c => new { c.Id, c.Name }).ToList();
+            
+            var albym = track.Album.Images.Skip(1).FirstOrDefault().Url;
+
+            
+            return new SpotifyTrack()
+            {
+                SpotifyId = spotifyId,
+                Name = track.Name,
+                AlbumUrl = albym,
+            };
         }
 
         public async Task<List<SpotifyTrack>> GetTracksFromPlaylist(string spotifyUserToken, string spotifyPlaylistId)

@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TrackByMyDuck.Application.Features.Tracks.Commands.AddTrack;
+using TrackByMyDuck.Application.Features.Tracks.Commands.CheckTrack;
 using TrackByMyDuck.Application.Features.Tracks.Queries.GetShowTrack;
+using TrackByMyDuck.Application.Features.Tracks.Queries.GetTracks;
 
 namespace TrackByMyDuck.Controllers
 {
@@ -16,14 +18,14 @@ namespace TrackByMyDuck.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet(Name = "GetAllEvents")]
+        [HttpGet(Name = "GetAllTracks")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<object>> GetAllTrack()
+        public async Task<ActionResult<object>> GetAllTracks()
         {
-            var result = await _mediator.Send(new );
+            var result = await _mediator.Send(new GetTracksQuery());
             return Ok(result);
-                }
+        }
 
         [HttpPost(Name = "AddTrack")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -34,12 +36,22 @@ namespace TrackByMyDuck.Controllers
             return Ok(result);
         }
 
+        [HttpPost("check-track", Name = "CheckTrack")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> CheckTrack([FromBody]CheckTrackCommand request)
+       {
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
+
+
         [HttpGet("get-show-track", Name = "GetShowTrack")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> GetShowTrack()
         {
-            var result = await _mediator.Send(new GetTracksQuery());
+            var result = await _mediator.Send(new GetShowTrackQuery());
             return Ok(result);
         }
     }

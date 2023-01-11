@@ -3,7 +3,7 @@
     public class Track
     {
         public int Id { get; set; }
-        public string SpotifyId { get; set; }
+        public string SpotifyId { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
     }
 }

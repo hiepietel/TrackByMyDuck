@@ -7,11 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrackByMyDuck.Application.Contracts.Persistence;
+using TrackByMyDuck.Application.Models.Spotify;
 using TrackByMyDuck.Core.Interfaces;
 
 namespace TrackByMyDuck.Application.Features.Tracks.Commands.CheckTrack
 {
-    public class CheckTrackCommandHandler : IRequestHandler<CheckTrackCommand, string>
+    public class CheckTrackCommandHandler : IRequestHandler<CheckTrackCommand, SpotifyTrack>
     {
         private readonly IConfiguration _configuration;
         private readonly ISpotifyService _spotifyService;
@@ -25,12 +26,12 @@ namespace TrackByMyDuck.Application.Features.Tracks.Commands.CheckTrack
             _spotifyLinkExtractorService = spotifyLinkExtractorService;
         }
 
-        public async Task<string> Handle(CheckTrackCommand request, CancellationToken cancellationToken)
+        public async Task<SpotifyTrack> Handle(CheckTrackCommand request, CancellationToken cancellationToken)
         {
             var spotifyTrackId = await _spotifyLinkExtractorService.GetSpotifyIdFromLink(request.Link);
             var track = await _spotifyService.CheckTrackFromSpotifyId(spotifyTrackId);
 
-            return spotifyTrackId;
+            return track;
         }
     }
 }
