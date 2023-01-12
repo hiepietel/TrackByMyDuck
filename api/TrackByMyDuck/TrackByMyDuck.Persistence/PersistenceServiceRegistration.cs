@@ -16,7 +16,7 @@ namespace TrackByMyDuck.Persistence
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
 
             services.AddScoped<ITrackRepository, TrackRepository>();
-            //services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             //services.AddScoped<IOrderRepository, OrderRepository>();
 
             return services;
