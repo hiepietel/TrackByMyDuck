@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -12,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 IConfiguration configuration = builder.Configuration;
 var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
+builder.Services.AddHttpClient();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(configuration);
@@ -31,24 +32,21 @@ builder.Services.AddSwaggerGen(options =>
 
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//    .AddJwtBearer(options =>
-//    {
-//        options.TokenValidationParameters = new TokenValidationParameters
-//        {
-//            ValidateIssuerSigningKey = true,
-//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-//                .GetBytes(configuration.GetSection("AppSettings:Token").Value)
-//            ),
-//            ValidateIssuer = false,
-//            ValidateAudience = false,
-//        };
-//    });
-builder.Services.AddAuthentication().AddFacebook(facebookOptions =>
-{
-    facebookOptions.AppId = "!@";//configuration["Authentication:Facebook:AppId"];
-    facebookOptions.AppSecret = "ADASD";// configuration["Authentication:Facebook:AppSecret"];
-});
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+                .GetBytes(configuration.GetSection("AppSettings:Token").Value)
+            ),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+        };
+    });
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: myAllowSpecificOrigins,
@@ -73,8 +71,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.MapGet("/", () => $"Hello World!{Environment.NewLine}I am TruckByMyDuck");
-app.MapGet("/ping", () => DateTime.Now);
 
 app.Run();

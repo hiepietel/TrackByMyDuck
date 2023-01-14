@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TrackByMyDuck.Application.Contracts.Infrastructure;
 using TrackByMyDuck.Application.Services;
 using TrackByMyDuck.Core.Interfaces;
+using TrackByMyDuck.Infrastructure.AuthenticationService;
 
 namespace TrackByMyDuck.Infrastructure
 {
@@ -11,6 +13,7 @@ namespace TrackByMyDuck.Infrastructure
         {
             services.AddTransient<ISpotifyService, SpotifyService>();
             services.AddTransient<ISpotifyLinkExtractorService, SpotifyLinkExtractorService>();
+            services.AddTransient<IAuthService, AuthService>();
 
             return services;
         }

@@ -8,6 +8,9 @@ import TextField from '@material-ui/core/TextField'
 import axios from 'axios';
 import TrackCard from './TrackCard'
 import { useNavigate } from 'react-router-dom'
+import api from "./../../../config/configAxios"
+
+
 const useStyles = makeStyles({
     field: {
       marginTop: 20,
@@ -29,10 +32,9 @@ const UploadTrack:React.FC = () => {
 
   const [isTrackValidated, setTrackValidated] = useState(false);
   const [track, setTrack] = useState<any>({});
+  
   const getMainPlaylist = (link: string) => {
-    //console.log(sessionStorage.getItem("token"));
-          //instance.defaults.headers.common['Authorization'] = unescape(encodeURIComponent(sessionStorage.getItem("token") ?? ""))
-        instance.post(process.env.REACT_APP_API_URL + "/api/Track/check-track",{Link:title})
+          api.post("/api/Track/check-track", {Link:title})
           .then(res => {
             console.log(res.data)
             setTrack(res.data)
@@ -46,8 +48,8 @@ const UploadTrack:React.FC = () => {
   
   const handleSubmit = () => {
     console.log();
-    if(title != ""){
-        instance.post(process.env.REACT_APP_API_URL + "/api/Track",{Link:title})
+    if(title !== ""){
+        api.post("/api/Track/add-track",{Link:title})
         .then(res => {
             history("main")
           console.log(res.data)
