@@ -4,6 +4,8 @@ import Container from '@material-ui/core/Container'
 import Masonry from 'react-masonry-css'
 import axios from "axios";
 import TrackCard from '../UploadTrack/components/TrackCard';
+import api from "./../../config/configAxios"
+
 
 const instance = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
@@ -22,7 +24,7 @@ const Feed :React.FC= () => {
     const [tracks, setTracks] = useState<any[]>([]);
 
     useEffect(() => {
-        instance.get(process.env.REACT_APP_API_URL + "/api/Track",)
+      api.get("/api/Track")
           .then(res => {
             console.log(res.data)
             setTracks(res.data);

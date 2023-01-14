@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json.Serialization;
-using System.ComponentModel.DataAnnotations;
 using TrackByMyDuck.Application.Contracts.Infrastructure;
 using TrackByMyDuck.Application.Models.Authentication;
 
@@ -24,33 +22,13 @@ namespace TrackByMyDuck.Controllers
             _authService = authService;
         }
 
-       
-
         [Route("facebook-login")]
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> FacebookLogin([FromBody] SocialLoginRequest obj)
         {
-            await _authService.SocialLogin(obj);
-            return Ok(true);
-        }
-
-
-        [Route("facebook-response")]
-        [HttpGet]
-        public async Task<IActionResult> FacebookResponse()
-        {
-            var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
-            var claims = result.Principal.Identities.FirstOrDefault().Claims.Select(claim => new
-                {
-                    claim.Issuer,
-                    claim.OriginalIssuer,
-                    claim.Type,
-                    claim.Value
-                });
-
-            return Ok(claims);
+            var token = await _authService.SocialLogin(obj);
+            return Ok(token);
         }
     }
 }
