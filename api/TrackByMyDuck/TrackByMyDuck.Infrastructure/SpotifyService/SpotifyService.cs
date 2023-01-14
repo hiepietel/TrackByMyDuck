@@ -1,17 +1,76 @@
 ﻿using Microsoft.Extensions.Configuration;
 using SpotifyAPI.Web;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
+using TrackByMyDuck.Application.Contracts.Persistence;
 using TrackByMyDuck.Application.Models.Spotify;
 using TrackByMyDuck.Core.Interfaces;
+using TrackByMyDuck.Domain.Entities;
 
 namespace TrackByMyDuck.Application.Services
 {
     public class SpotifyService: ISpotifyService
     {
         private readonly IConfiguration _configuration;
-        public SpotifyService(IConfiguration configuration)
+        private readonly ITrackRepository _trackRepository;
+        private readonly IArtistRepository _artistRepository;
+        private readonly IAlbumRepository _albumRepository;
+        public SpotifyService(IConfiguration configuration, ITrackRepository trackRepository, IArtistRepository artistRepository, IAlbumRepository albumRepository)
         {
             _configuration = configuration;
+            _trackRepository = trackRepository;
+            _artistRepository = artistRepository;
+            _albumRepository = albumRepository;
+        }
+
+        public async Task<SpotifyTrack> CheckAndCreateTrack(string spotifyTrackId)
+        {
+            var track = await _trackRepository.GetBySpotifyIdAsync(spotifyTrackId);
+            if (track == null)
+            {
+                var config = SpotifyClientConfig.CreateDefault();
+                var clientId = _configuration.GetSection("Spotify:ClientId")?.Value;
+                var clientSecret = _configuration.GetSection("Spotify:ClientSecret")?.Value;
+                var request = new ClientCredentialsRequest(clientId, clientSecret);
+                var response = await new OAuthClient(config).RequestToken(request);
+
+                var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
+
+                var spotifyTrack = await spotify.Tracks.Get(spotifyTrackId);
+
+                var artistSpotifyIds = spotifyTrack.Artists.Select(x => x.Id).ToList();
+                var spotifyAlbum = spotifyTrack.Album;
+
+                var album = await _albumRepository.GetBySpotifyIdAsync(spotifyAlbum.Id);
+                if (album == null)
+                {
+                    var newAlbum = new Album()
+                    {
+                        Name = spotifyAlbum.Name,
+                        TotalTracks = spotifyAlbum.TotalTracks,
+                        SpotifyId = spotifyAlbum.Id,
+                        ImgHref = spotifyAlbum.Images.FirstOrDefault()?.Url
+                    };
+                    album = await _albumRepository.AddAsync(newAlbum);
+                }
+
+                var artists = await _artistRepository.GetBySpotifyIdAsync(artistSpotifyIds);
+
+                var newTrack = new Track()
+                {
+                    Name = spotifyTrack.Name,
+                    SpotifyId = spotifyTrackId,
+                    AlbumId = album.Id,
+                    
+                };
+                await _trackRepository.AddAsync(newTrack);
+
+            }
+            else
+            {
+                return new SpotifyTrack();
+            }
+            return new SpotifyTrack();
         }
 
         public async Task<SpotifyTrack> CheckTrackFromSpotifyId(string spotifyId)

@@ -24,5 +24,10 @@ namespace TrackByMyDuck.Persistence.Repositories
 
             return track;
         }
+
+        public async Task<Track> GetBySpotifyIdAsync(string spotifyTrackId)
+        {
+            return await _dbContext.Tracks.FirstOrDefaultAsync(x => x.SpotifyId == spotifyTrackId);
+        }
     }
 }

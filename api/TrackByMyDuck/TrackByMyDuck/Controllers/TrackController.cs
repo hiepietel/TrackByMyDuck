@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrackByMyDuck.Application.Features.Tracks.Commands.AddTrack;
 using TrackByMyDuck.Application.Features.Tracks.Commands.CheckTrack;
@@ -9,6 +10,7 @@ namespace TrackByMyDuck.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class TrackController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -27,7 +29,7 @@ namespace TrackByMyDuck.Controllers
             return Ok(result);
         }
 
-        [HttpPost(Name = "AddTrack")]
+        [HttpPost("add-track", Name = "AddTrack")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> AddTrack([FromBody]AddTrackCommand request)

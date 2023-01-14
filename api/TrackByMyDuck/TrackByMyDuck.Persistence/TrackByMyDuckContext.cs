@@ -11,10 +11,13 @@ namespace TrackByMyDuck.Persistence
 
         }
         public DbSet<Track> Tracks { get; set; }
+        public DbSet<Album> Albums { get; set; }
+        public DbSet<Artist> Artists { get; set; }
+        public DbSet<User> Users { get; set; }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //   //modelBuilder.ApplyConfigurationsFromAssembly(typeof(TrackByMyDuckContext).Assembly);
-        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(TrackByMyDuckContext).Assembly);
+        }
     }
 } 

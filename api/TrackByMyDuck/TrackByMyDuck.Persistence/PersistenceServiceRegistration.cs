@@ -17,6 +17,8 @@ namespace TrackByMyDuck.Persistence
 
             services.AddScoped<ITrackRepository, TrackRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IArtistRepository, ArtistRepository>();
+            services.AddScoped<IAlbumRepository, AlbumRepository>();
             //services.AddScoped<IOrderRepository, OrderRepository>();
 
             return services;
