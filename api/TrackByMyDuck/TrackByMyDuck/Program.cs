@@ -1,15 +1,23 @@
+using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
+using TrackByMyDuck.Application;
+using TrackByMyDuck.Infrastructure;
+using TrackByMyDuck.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
-ConfigurationManager configuration = builder.Configuration;
+IConfiguration configuration = builder.Configuration;
 var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
-
+builder.Services.AddHttpClient();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices(configuration);
+builder.Services.AddPersistenceServices(configuration);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -24,6 +32,7 @@ builder.Services.AddSwaggerGen(options =>
 
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -31,7 +40,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         {
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-                .GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)
+                .GetBytes(configuration.GetSection("AppSettings:Token").Value)
             ),
             ValidateIssuer = false,
             ValidateAudience = false,
@@ -62,8 +71,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.MapGet("/", () => $"Hello World!{Environment.NewLine}I am TruckByMyDuck");
-app.MapGet("/ping", () => DateTime.Now);
 
 app.Run();
