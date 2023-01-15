@@ -11,5 +11,6 @@ namespace TrackByMyDuck.Application.Features.Tracks.Queries.GetTracks
         public int Id { get; set; }
         public string SpotifyId { get; set; }
         public string Name { get; set; } = string.Empty;
+        public string ImgHref { get; set; } = string.Empty;
     }
 }

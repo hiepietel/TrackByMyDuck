@@ -24,6 +24,14 @@ namespace TrackByMyDuck.Persistence.Repositories
             return entity;
         }
 
+        public async Task<List<T>> AddManyAsync(List<T> entities)
+        {
+            await _dbContext.AddRangeAsync(entities);
+            await _dbContext.SaveChangesAsync();
+
+            return entities;
+        }
+
         public async Task DeleteAsync(T entity)
         {
             _dbContext.Set<T>().Remove(entity);

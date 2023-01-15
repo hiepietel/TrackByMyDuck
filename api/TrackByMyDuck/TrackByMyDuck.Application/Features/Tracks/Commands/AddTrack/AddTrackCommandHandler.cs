@@ -34,7 +34,7 @@ namespace TrackByMyDuck.Application.Features.Tracks.Commands.AddTrack
             var spotifyTrackId = await _spotifyLinkExtractorService.GetSpotifyIdFromLink(request.Link);
             var track = await _spotifyService.CheckAndCreateTrack(spotifyTrackId);
 
-            var showTrack = await _trackRepository.AddAsync(_mapper.Map<Track>(track));
+            //var showTrack = await _trackRepository.AddAsync(_mapper.Map<Track>(track));
 
             return true;
         }

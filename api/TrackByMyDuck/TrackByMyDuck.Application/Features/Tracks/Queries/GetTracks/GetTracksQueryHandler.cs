@@ -23,7 +23,10 @@ namespace TrackByMyDuck.Application.Features.Tracks.Queries.GetTracks
 
         public async Task<List<TrackVm>> Handle(GetTracksQuery request, CancellationToken cancellationToken)
         {
-            var trackVmList = await _trackRepository.ListAllAsync();
+
+            var trackVmList = await _trackRepository.ListAllWithAdditionalData();
+
+            //var trackVmList = await _trackRepository.ListAllAsync();
             return _mapper.Map<List<TrackVm>>(trackVmList);
         }
     }

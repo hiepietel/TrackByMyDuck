@@ -9,20 +9,19 @@ using TrackByMyDuck.Domain.Entities;
 
 namespace TrackByMyDuck.Persistence.Configurations
 {
-    public class TrackConfiguration : IEntityTypeConfiguration<Track>
+    internal class TrackArtistConfiguration: IEntityTypeConfiguration<TrackArtist>
     {
-        public void Configure(EntityTypeBuilder<Track> builder)
+        public void Configure(EntityTypeBuilder<TrackArtist> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.HasIndex(x => x.SpotifyId).IsUnique();
 
-            builder.HasOne(x => x.Album)
+            builder.HasOne(x => x.Track)
                 .WithMany()
-                .HasForeignKey(x => x.AlbumId);
-
-            builder.HasMany(x => x.TrackArtists)
-                .WithOne()
                 .HasForeignKey(x => x.TrackId);
+
+            builder.HasOne(x => x.Artist)
+                .WithMany()
+                .HasForeignKey(x => x.ArtistId);
         }
     }
 }

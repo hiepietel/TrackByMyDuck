@@ -6,5 +6,6 @@ namespace TrackByMyDuck.Application.Contracts.Persistence
     {
         Task<Track> GetShowTrack();
         Task<Track> GetBySpotifyIdAsync(string spotifyTrackId);
+        Task<List<Track>> ListAllWithAdditionalData();
     }
 }

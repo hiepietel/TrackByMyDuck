@@ -14,7 +14,7 @@ namespace TrackByMyDuck.Persistence
         public DbSet<Album> Albums { get; set; }
         public DbSet<Artist> Artists { get; set; }
         public DbSet<User> Users { get; set; }
-
+        public DbSet<TrackArtist> TrackArtists { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(TrackByMyDuckContext).Assembly);

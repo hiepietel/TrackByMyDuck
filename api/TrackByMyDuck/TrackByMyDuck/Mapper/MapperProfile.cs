@@ -13,7 +13,8 @@ namespace TrackByMyDuck.Mapper
         {
             CreateMap<SpotifyTrack, SpotifyTrackDto>();
             CreateMap<Track, ShowTrackVm>();
-            CreateMap<Track, TrackVm>();
+            CreateMap<Track, TrackVm>()
+                .ForMember(x => x.ImgHref, y => y.MapFrom(x => x.Album.ImgHref));
         }    
     }
 }
