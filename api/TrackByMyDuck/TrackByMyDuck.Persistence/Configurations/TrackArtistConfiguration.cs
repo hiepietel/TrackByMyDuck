@@ -24,8 +24,9 @@ namespace TrackByMyDuck.Persistence.Configurations
 
             builder.HasOne(x => x.Artist)
                 .WithMany()
-                .OnDelete(DeleteBehavior.NoAction)
                 .HasForeignKey(x => x.ArtistId);
+
+            
         }
     }
 }

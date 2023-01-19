@@ -1,6 +1,5 @@
 import React from 'react'
 import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
@@ -8,6 +7,7 @@ import DeleteOutlined from '@material-ui/icons/DeleteOutlined'
 import { Box, CardMedia, Grid, makeStyles } from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar'
 import { yellow, green, pink, blue } from '@material-ui/core/colors'
+import { CardHeader, createTheme } from '@mui/material'
 
 interface TrackCardProps{
     track: any
@@ -15,44 +15,52 @@ interface TrackCardProps{
 
 const TrackCard :React.FC<TrackCardProps>= ({track}) => {
 
+  const theme = createTheme({
+    components: {
+      // Name of the component
+      MuiCardHeader: {
+        styleOverrides: {
+          // Name of the slot
+          root: {
+            // Some CSS
+            fontSize: '1rem',
+            padding: "5px",
+            margin: '0px',
+            backgroundColor: '#B32D2C',
+          },
+        },
+      },
+    },
+  });
+
+
     return (
-<Grid container justify = "center">
+<Grid container justifyContent = "center">
           <Card elevation={5}>
-            {/* <CardHeader
-              avatar={
-                <Avatar className={"classes.avatar"}>
-                </Avatar>}
-              // action={
-              //   <IconButton onClick={() => {}}>
-              //     <DeleteOutlined />
-              //   </IconButton>
-              // }
-              title={track.name}
-              //subheader={"note.category"}
-            />    */}
           <Box sx={{ display: 'flex' }}>
           <div>
           <CardHeader
+            theme={theme}
               avatar={
                 <Avatar className={"classes.avatar"}>
                 </Avatar>}
-              // action={
-              //   <IconButton onClick={() => {}}>
-              //     <DeleteOutlined />
-              //   </IconButton>
-              // }
               title={track.name}
+              
               //subheader={"note.category"}
             />   
               <CardContent style={{ flex: '1 0 auto', width: 320 }}>
                 <Typography component="div" variant="h5">
                   {track.name}
                 </Typography>
-                <Typography variant="subtitle1"  component="div">
-                  Mac Miller
+                  {track.artists ? track.artists.map((note:any) => (
+                    <Typography variant="subtitle1"  component="div">
+                      {note}
                 </Typography>
-                <video controls={true} autoPlay={false} style={{height: 40, width: "90%"}}>
-                  <source src="https://p.scdn.co/mp3-preview/ece7de9fa4f1694b5775fd6a4e28b87eccdfd5d5?cid=0677be572f8049d083932db39f8f77f5" type="audio/mpeg" />
+
+                  )) : <></>}
+                
+                <video controls={true} autoPlay={false} style={{height: 80, width: "90%"}}>
+                  <source src={track.previewUrl} type="audio/mpeg" />
 
                   </video>
                   

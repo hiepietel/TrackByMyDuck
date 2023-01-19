@@ -15,7 +15,7 @@ namespace TrackByMyDuck.Mapper
             CreateMap<Track, ShowTrackVm>();
             CreateMap<Track, TrackVm>()
                 .ForMember(x => x.ImgHref, y => y.MapFrom(x => x.Album.ImgHref))
-                .ForMember(z => z.Artists, x => x.MapFrom(x => x.Artists.Select(x => x.Name)));
+                .ForMember(z => z.Artists, x => x.MapFrom(x => x.TrackArtists.Select(x => x.Artist.Name)));
                 
         }    
     }

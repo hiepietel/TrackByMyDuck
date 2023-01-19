@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="6.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.1">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -26,10 +26,6 @@
     <ProjectReference Include="..\TrackByMyDuck.Infrastructure\TrackByMyDuck.Infrastructure.csproj" />
     <ProjectReference Include="..\TrackByMyDuck.Persistence\TrackByMyDuck.Persistence.csproj" />
     <ProjectReference Include="..\TrackByMyDuck.UnitTests\TrackByMyDuck.UnitTests.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

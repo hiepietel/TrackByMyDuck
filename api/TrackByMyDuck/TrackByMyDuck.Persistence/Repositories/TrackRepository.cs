@@ -35,7 +35,7 @@ namespace TrackByMyDuck.Persistence.Repositories
             return await _dbContext.Tracks
                 .Include(x => x.Album)
                 .Include(x => x.TrackArtists)
-                .ThenInclude(x => x.Artist)
+                    .ThenInclude(x => x.Artist)
                 .ToListAsync();
         }
     }

@@ -23,6 +23,7 @@ namespace TrackByMyDuck.Persistence.Configurations
             builder.HasMany(x => x.TrackArtists)
                 .WithOne()
                 .HasForeignKey(x => x.TrackId);
+                            
         }
     }
 }

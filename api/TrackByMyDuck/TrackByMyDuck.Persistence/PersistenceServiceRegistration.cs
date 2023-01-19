@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TrackByMyDuck.Persistence.Repositories;
 using TrackByMyDuck.Application.Contracts.Persistence;
+using System;
 
 namespace TrackByMyDuck.Persistence
 {
@@ -12,7 +13,11 @@ namespace TrackByMyDuck.Persistence
         {
             services.AddDbContext<TrackByMyDuckContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("TrackByMyDuckDatabase"), b => b.MigrationsAssembly("TrackByMyDuck"))
-             );
+            );
+
+            //services.AddDbContext<TrackByMyDuckContext>
+            //        (o => o.UseInMemoryDatabase("MyDatabase"));
+
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
 
             services.AddScoped<ITrackRepository, TrackRepository>();

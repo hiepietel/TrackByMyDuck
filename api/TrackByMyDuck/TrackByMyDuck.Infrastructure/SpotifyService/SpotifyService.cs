@@ -57,7 +57,8 @@ namespace TrackByMyDuck.Application.Services
                     Name = spotifyAlbum.Name,
                     TotalTracks = spotifyAlbum.TotalTracks,
                     SpotifyId = spotifyAlbum.Id,
-                    ImgHref = spotifyAlbum.Images.FirstOrDefault()?.Url
+                    ImgHref = spotifyAlbum.Images.FirstOrDefault()?.Url,
+                    
                 };
                 album = await _albumRepository.AddAsync(newAlbum);
             }
@@ -88,6 +89,7 @@ namespace TrackByMyDuck.Application.Services
                 Name = spotifyTrack.Name,
                 SpotifyId = spotifyTrackId,
                 AlbumId = album.Id,
+                PreviewUrl = spotifyTrack.PreviewUrl
 
             };
             await _trackRepository.AddAsync(newTrack);
@@ -104,11 +106,14 @@ namespace TrackByMyDuck.Application.Services
 
             await _trackArtistRepository.AddManyAsync(trackArtistListToAdd);
 
+            //newTrack.TrackArtistId =  
+
             return new SpotifyTrack()
             {
                 AlbumUrl = album.ImgHref,
                 Artists = artistsToAdd.Select(x => x.Name).ToList(),
-                Name = newTrack.Name
+                Name = newTrack.Name,
+                PreviewUrl = spotifyTrack.PreviewUrl
             };
 
         }
