@@ -5,6 +5,8 @@ import Masonry from 'react-masonry-css'
 import axios from "axios";
 import TrackCard from '../UploadTrack/components/TrackCard';
 import api from "./../../config/configAxios"
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 
 
 const instance = axios.create({
@@ -37,17 +39,24 @@ const Feed :React.FC= () => {
 
     return (
         <Container>
-          <Masonry
+          {/* <Masonry
             breakpointCols={breakpoints}
             className="my-masonry-grid"
-            columnClassName="my-masonry-grid_column">
+            columnClassName="my-masonry-grid_column"> */}
+                <List
+      sx={{ width: '100%',  bgcolor: 'background.paper' }}
+      subheader={""}  
+    >
             {tracks.map(note => (
               <div key={note.id}>
+                <ListItem alignItems="center">
                 <TrackCard track={note} />
+                </ListItem>
                 {/* <NoteCard note={note} handleDelete={handleDelete} /> */}
               </div>
             ))}
-          </Masonry>
+          {/* </Masonry> */}
+          </List>
         </Container>
       )
         }

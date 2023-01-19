@@ -11,7 +11,7 @@ namespace TrackByMyDuck.Infrastructure
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient<ISpotifyService, SpotifyService>();
+            services.AddTransient<ISpotifyService, Application.Services.SpotifyService>();
             services.AddTransient<ISpotifyLinkExtractorService, SpotifyLinkExtractorService>();
             services.AddTransient<IAuthService, AuthService>();
 

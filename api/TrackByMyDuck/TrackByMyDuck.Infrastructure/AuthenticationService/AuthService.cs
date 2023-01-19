@@ -27,7 +27,7 @@ namespace TrackByMyDuck.Infrastructure.AuthenticationService
         }
         public async Task<string> SocialLogin(SocialLoginRequest request)
         {
-            var tokenValidationResult = await ValidateFacebookToken(request);
+            //var tokenValidationResult = await ValidateFacebookToken(request);
 
             string token = CreateToken(request);
             return token;

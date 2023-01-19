@@ -15,12 +15,16 @@ namespace TrackByMyDuck.Persistence.Configurations
         {
             builder.HasKey(x => x.Id);
 
-            builder.HasOne(x => x.Track)
-                .WithMany()
-                .HasForeignKey(x => x.TrackId);
+            //builder.HasOne(x => x.Track)
+            //    .WithMany()
+            //    .OnDelete(DeleteBehavior.NoAction)
+
+            //    .HasForeignKey(x => x.TrackId);
+
 
             builder.HasOne(x => x.Artist)
                 .WithMany()
+                .OnDelete(DeleteBehavior.NoAction)
                 .HasForeignKey(x => x.ArtistId);
         }
     }

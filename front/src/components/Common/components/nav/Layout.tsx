@@ -1,5 +1,5 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core'
+import { styled, useTheme } from '@mui/material/styles';
 import Drawer from '@material-ui/core/Drawer'
 import Typography from '@material-ui/core/Typography'
 import {useNavigate , useLocation } from 'react-router-dom'
@@ -8,12 +8,17 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import { AddCircleOutlineOutlined, SubjectOutlined } from '@material-ui/icons'
-import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import { format } from 'date-fns'
 import Avatar from '@material-ui/core/Avatar'
+import IconButton from '@mui/material/IconButton';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import { makeStyles } from '@material-ui/core';
+import MenuIcon from '@mui/icons-material/Menu';
 
-const drawerWidth = 240
+const drawerWidth = 360
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -36,6 +41,7 @@ const useStyles = makeStyles((theme) => {
     },
     title: {
       padding: theme.spacing(2),
+      flexGrow: 1
     },
     appBar: {
       width: `calc(100% - ${drawerWidth}px)`,
@@ -51,6 +57,49 @@ const useStyles = makeStyles((theme) => {
   }
 })
 
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+  justifyContent: 'flex-end',
+}));
+
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
+  open?: boolean;
+}>(({ theme, open }) => ({
+  flexGrow: 1,
+  padding: theme.spacing(3),
+  transition: theme.transitions.create('margin', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  marginLeft: `-${drawerWidth}px`,
+  ...(open && {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+  }),
+}));
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open' })<{open?: boolean;}>(({ theme, open }) => ({
+  transition: theme.transitions.create(['margin', 'width'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: `${drawerWidth}px`,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
 
 interface LayoutProps{
     children: any
@@ -60,6 +109,17 @@ const Layout: React.FC<LayoutProps> =({ children }) =>{
   const classes = useStyles()
   const history = useNavigate ()
   const location = useLocation()
+  const theme = useTheme();
+  
+  const [open, setOpen] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
   const menuItems = [
     { 
@@ -82,10 +142,20 @@ const Layout: React.FC<LayoutProps> =({ children }) =>{
         className={classes.appBar}
         elevation={0}
         color="primary"
+        open={open}
       >
         <Toolbar>
-          <Typography className={classes.date}>
-            Today is the {format(new Date(), 'do MMMM Y')}
+        <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            style={{ ...(open && { display: 'none' }) }}
+          >
+             <MenuIcon />
+          </IconButton>
+          <Typography variant="h5" className={classes.title}>
+            TrackByMyDuck
           </Typography>
           <Typography>Mario</Typography>
           <Avatar className={classes.avatar} src="/mario-av.png" />
@@ -95,15 +165,16 @@ const Layout: React.FC<LayoutProps> =({ children }) =>{
       {/* side drawer */}
       <Drawer
         className={classes.drawer}
-        variant="permanent"
+        variant="persistent"
         classes={{ paper: classes.drawerPaper }}
         anchor="left"
+        open={open}
       >
-        <div>
-          <Typography variant="h5" className={classes.title}>
-            TrackByMyDuck
-          </Typography>
-        </div>
+        <DrawerHeader>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </DrawerHeader>
 
         {/* links/list section */}
         <List>
@@ -123,11 +194,16 @@ const Layout: React.FC<LayoutProps> =({ children }) =>{
       </Drawer>
 
       {/* main content */}
-      <div className={classes.page}>
-        <div className={classes.toolbar}></div>
+      <Main open={open}>
+      <DrawerHeader />
+      {/* <div className={classes.page}>  */}
+         {/* <div className={classes.toolbar}></div> */}
         { children }
-      </div>
+      {/* </div>  */}
+      </Main>
     </div>
+      
+
   )
 }
 export default Layout;

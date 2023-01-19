@@ -11,5 +11,6 @@ namespace TrackByMyDuck.Application.Models.Spotify
         public string SpotifyId { get; set; }
         public string Name { get; set; }
         public string AlbumUrl { get; set; }
+        public List<string> Artists { get; set; }
     }
 }
