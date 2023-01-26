@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TrackByMyDuck.Application.Models.Authentication;
-
-namespace TrackByMyDuck.Application.Contracts.Infrastructure
+﻿namespace TrackByMyDuck.Application.Contracts.Infrastructure
 {
     public interface IAuthService
     {
-        Task<string> SocialLogin(SocialLoginRequest request);
+        Task<string> CreateToken(string name, string id, string email);
+        Task<bool> ValidateFacebookToken(string accessToken);
+        Task<string> GetUserInfo();
     }
 }

@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using TrackByMyDuck.Application.Features.Tracks.Queries.GetShowTrack;
 using TrackByMyDuck.Application.Features.Tracks.Queries.GetTracks;
-using TrackByMyDuck.Application.Models.Spotify;
 using TrackByMyDuck.Domain.Entities;
-using TrackByMyDuck.Dtos;
 
 namespace TrackByMyDuck.Mapper
 {
@@ -11,11 +8,17 @@ namespace TrackByMyDuck.Mapper
     {
         public MapperProfile()
         {
-            CreateMap<SpotifyTrack, SpotifyTrackDto>();
-            CreateMap<Track, ShowTrackVm>();
-            CreateMap<Track, TrackVm>()
-                .ForMember(x => x.ImgHref, y => y.MapFrom(x => x.Album.ImgHref))
-                .ForMember(z => z.Artists, x => x.MapFrom(x => x.TrackArtists.Select(x => x.Artist.Name)));
+            CreateMap<UserTrack, TrackVm>()
+                .ForMember(x => x.SpotifyTrackId, y => y.MapFrom(x => x.Track.SpotifyId))
+                .ForMember(x => x.PreviewUrl, y => y.MapFrom(x => x.Track.PreviewUrl))
+                .ForMember(x => x.TrackName, u => u.MapFrom(c => c.Track.Name))
+                .ForMember(x => x.ImgHref, y => y.MapFrom(x => x.Track.Album.ImgHref))
+                .ForMember(z => z.Artists, x => x.MapFrom(x => x.Track.TrackArtists.Select(x => x.Artist.Name)))
+                .ForMember(n => n.ImgHref, m => m.MapFrom(x => x.Track.Album.ImgHref)) // 
+                .ForMember(c => c.UserId, v => v.MapFrom(v => v.User.Id))
+                .ForMember(c => c.UserName, v => v.MapFrom(v => v.User.Name));
+
+
                 
         }    
     }

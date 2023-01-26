@@ -14,5 +14,8 @@ namespace TrackByMyDuck.Domain.Entities
         public DateTime CreatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
         public bool IsDeleted { get; set; } = false;
+
+        public virtual Track Track { get; set; }
+        public virtual User User { get; set; }
     }
 }

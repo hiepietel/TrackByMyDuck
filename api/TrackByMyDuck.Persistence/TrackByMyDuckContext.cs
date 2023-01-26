@@ -15,6 +15,7 @@ namespace TrackByMyDuck.Persistence
         public DbSet<Artist> Artists { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<TrackArtist> TrackArtists { get; set; }
+        public DbSet<UserTrack> UserTracks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

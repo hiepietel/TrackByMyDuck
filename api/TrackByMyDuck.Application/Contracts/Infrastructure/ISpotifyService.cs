@@ -6,7 +6,7 @@ namespace TrackByMyDuck.Core.Interfaces
     {
         Task<SpotifyTrack> CheckTrackFromSpotifyId(string spotifyTrackId);
 
-        Task<List<SpotifyTrack>> GetTracksFromPlaylist(string spotifyUserToken, string spotifyPlaylistId);
+        //Task<List<SpotifyTrack>> GetTracksFromPlaylist(string spotifyUserToken, string spotifyPlaylistId);
         Task<SpotifyTrack> CheckAndCreateTrack(string spotifyTrackId);
     }
 }

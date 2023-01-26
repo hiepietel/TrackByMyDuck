@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TrackByMyDuck.Persistence.Repositories;
 using TrackByMyDuck.Application.Contracts.Persistence;
 using System;
+using TrackByMyDuck.Domain.Entities;
 
 namespace TrackByMyDuck.Persistence
 {
@@ -11,12 +12,20 @@ namespace TrackByMyDuck.Persistence
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<TrackByMyDuckContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("TrackByMyDuckDatabase"), b => b.MigrationsAssembly("TrackByMyDuck"))
-            );
+            if (true)
+            {
+                services.AddDbContext<TrackByMyDuckContext>(options =>
+                    options.UseSqlServer(configuration.GetConnectionString("TrackByMyDuckDatabase"), b => b.MigrationsAssembly("TrackByMyDuck"))
+                );
+            }
+            else
+            {
+                services.AddDbContext<TrackByMyDuckContext>
+                    (o => o.UseInMemoryDatabase("MyDatabase"));
+            }
 
-            //services.AddDbContext<TrackByMyDuckContext>
-            //        (o => o.UseInMemoryDatabase("MyDatabase"));
+            services.AddDbContext<TrackByMyDuckContext>
+                    (o => o.UseInMemoryDatabase("MyDatabase"));
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
 
@@ -25,6 +34,7 @@ namespace TrackByMyDuck.Persistence
             services.AddScoped<IArtistRepository, ArtistRepository>();
             services.AddScoped<IAlbumRepository, AlbumRepository>();
             services.AddScoped<ITrackArtistRepository, TrackArtistRepository>();
+            services.AddScoped<IUserTrackRepository, UserTrackRepository>();
             //services.AddScoped<IOrderRepository, OrderRepository>();
 
             return services;

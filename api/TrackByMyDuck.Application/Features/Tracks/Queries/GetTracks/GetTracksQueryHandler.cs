@@ -14,20 +14,22 @@ namespace TrackByMyDuck.Application.Features.Tracks.Queries.GetTracks
     {
         private readonly ITrackRepository _trackRepository;
         private readonly IMapper _mapper;
+        private readonly IUserTrackRepository _userTrackRepository;
 
-        public GetTracksQueryHandler(IMapper mapper, ITrackRepository trackRepository)
+        public GetTracksQueryHandler(IMapper mapper, ITrackRepository trackRepository, IUserTrackRepository userTrackRepository)
         {
             _mapper = mapper;
             _trackRepository = trackRepository;
+            _userTrackRepository = userTrackRepository;
         }
 
         public async Task<List<TrackVm>> Handle(GetTracksQuery request, CancellationToken cancellationToken)
         {
+            var userTracks = await _userTrackRepository.ListAllWithAdditionalData();
 
-            var trackVmList = await _trackRepository.ListAllWithAdditionalData();
 
             //var trackVmList = await _trackRepository.ListAllAsync();
-            return _mapper.Map<List<TrackVm>>(trackVmList);
+            return _mapper.Map<List<TrackVm>>(userTracks);
         }
     }
 }

@@ -7,6 +7,7 @@ namespace TrackByMyDuck.Persistence.Repositories
     {
         public TrackArtistRepository(TrackByMyDuckContext dbContext) : base(dbContext)
         {
+
         }
     }
 }
