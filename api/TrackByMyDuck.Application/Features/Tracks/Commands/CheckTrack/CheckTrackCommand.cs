@@ -8,7 +8,7 @@ using TrackByMyDuck.Application.Models.Spotify;
 
 namespace TrackByMyDuck.Application.Features.Tracks.Commands.CheckTrack
 {
-    public class CheckTrackCommand: IRequest<SpotifyTrack>
+    public class CheckTrackCommand: IRequest<CheckTrackVm>
     {
         public string Link { get; set; }
     }

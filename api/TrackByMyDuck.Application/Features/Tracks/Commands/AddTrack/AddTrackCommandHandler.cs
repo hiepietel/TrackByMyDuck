@@ -13,7 +13,7 @@ using TrackByMyDuck.Domain.Entities;
 
 namespace TrackByMyDuck.Application.Features.Tracks.Commands.AddTrack
 {
-    public class AddTrackCommandHandler : IRequestHandler<AddTrackCommand, bool>
+    public class AddTrackCommandHandler : IRequestHandler<AddTrackCommand, AddTrackVm>
     {
         private readonly IConfiguration _configuration;
         private readonly ISpotifyService _spotifyService;
@@ -30,7 +30,7 @@ namespace TrackByMyDuck.Application.Features.Tracks.Commands.AddTrack
             _spotifyLinkExtractorService = spotifyLinkExtractorService;
             _userTrackService = userTrackService;
         }
-        public async Task<bool> Handle(AddTrackCommand request, CancellationToken cancellationToken)
+        public async Task<AddTrackVm> Handle(AddTrackCommand request, CancellationToken cancellationToken)
         {
 
             var spotifyTrackId = await _spotifyLinkExtractorService.GetSpotifyIdFromLink(request.Link);
@@ -38,9 +38,8 @@ namespace TrackByMyDuck.Application.Features.Tracks.Commands.AddTrack
 
             var asd = await _userTrackService.CreateFromTrack(track.Id);
 
-            //var showTrack = await _trackRepository.AddAsync(_mapper.Map<Track>(track));
 
-            return true;
+            return _mapper.Map<AddTrackVm>(track);
         }
     }
 }

@@ -109,7 +109,7 @@ namespace TrackByMyDuck.Application.Services
             return new SpotifyTrack()
             {
                 Id= newTrack.Id,
-                AlbumUrl = album.ImgHref,
+                ImgHref = album.ImgHref,
                 Artists = artistsToAdd.Select(x => x.Name).ToList(),
                 Name = newTrack.Name,
                 PreviewUrl = spotifyTrack.PreviewUrl
@@ -122,7 +122,7 @@ namespace TrackByMyDuck.Application.Services
 
             var spotifyTrack = await _spotifyApiService.GetTrackBySpotyfiyId(spotifyTrackId);
 
-            var artists = spotifyTrack.Artists.Select(c => new { c.Id, c.Name }).ToList();
+            var artists = spotifyTrack.Artists.Select(c => c.Name).ToList();
 
             var albym = spotifyTrack.Album.Images.Skip(1).FirstOrDefault().Url;
 
@@ -130,8 +130,10 @@ namespace TrackByMyDuck.Application.Services
             return new SpotifyTrack()
             {
                 SpotifyId = spotifyTrackId,
+                PreviewUrl = spotifyTrack.PreviewUrl,
                 Name = spotifyTrack.Name,
-                AlbumUrl = albym,
+                Artists = artists,
+                ImgHref = albym
             };
         }
 

@@ -12,7 +12,7 @@ using TrackByMyDuck.Core.Interfaces;
 
 namespace TrackByMyDuck.Application.Features.Tracks.Commands.CheckTrack
 {
-    public class CheckTrackCommandHandler : IRequestHandler<CheckTrackCommand, SpotifyTrack>
+    public class CheckTrackCommandHandler : IRequestHandler<CheckTrackCommand, CheckTrackVm>
     {
         private readonly IConfiguration _configuration;
         private readonly ISpotifyService _spotifyService;
@@ -26,12 +26,12 @@ namespace TrackByMyDuck.Application.Features.Tracks.Commands.CheckTrack
             _spotifyLinkExtractorService = spotifyLinkExtractorService;
         }
 
-        public async Task<SpotifyTrack> Handle(CheckTrackCommand request, CancellationToken cancellationToken)
+        public async Task<CheckTrackVm> Handle(CheckTrackCommand request, CancellationToken cancellationToken)
         {
             var spotifyTrackId = await _spotifyLinkExtractorService.GetSpotifyIdFromLink(request.Link);
             var track = await _spotifyService.CheckTrackFromSpotifyId(spotifyTrackId);
 
-            return track;
+            return _mapper.Map<CheckTrackVm>(track);
         }
     }
 }
