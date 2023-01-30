@@ -25,6 +25,8 @@ jobs:
         run: |
           cd front
           npm install
+          env:
+             CI: false
           npm run build --if-present
           env:
              CI: false
