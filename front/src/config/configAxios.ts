@@ -20,7 +20,9 @@ const api = () => {
     const token = sessionStorage.getItem("token");
     
     if(!!config.headers) {
-      config.headers.Authorization =  token ? `${token}` : '';
+      config.headers= {
+        Authorization :  token ? `${token}` : ''
+      }
       config.headers['Access-Control-Max-Age'] = 0;
     }
     
