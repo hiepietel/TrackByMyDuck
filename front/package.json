@@ -22,6 +22,7 @@
     "env-cmd": "^10.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-facebook-login": "^4.1.1",
     "react-masonry-css": "^1.0.16",
     "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
@@ -54,6 +55,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-facebook-login": "^4.1.5",
     "dotenv": "^16.0.3"
   }
 }
