@@ -26,7 +26,8 @@ const TrackCard :React.FC<TrackCardProps>= ({track}) => {
             fontSize: '1rem',
             padding: "5px",
             margin: '0px',
-            backgroundColor: '#B32D2C',
+            backgroundColor: '#606060',
+            color: "#EEEEEE"
           },
         },
       },
@@ -44,21 +45,23 @@ const TrackCard :React.FC<TrackCardProps>= ({track}) => {
               avatar={
                 <Avatar className={"classes.avatar"}>
                 </Avatar>}
-              title={track.name}
+              title={track.userName}
               
               //subheader={"note.category"}
             />   
               <CardContent style={{ flex: '1 0 auto', width: 320 }}>
                 <Typography component="div" variant="h5">
-                  {track.name}
+                  {track.trackName}
                 </Typography>
                   {track.artists ? track.artists.map((note:any) => (
                     <Typography variant="subtitle1"  component="div">
                       {note}
-                </Typography>
+                    </Typography>
 
                   )) : <></>}
-                
+                <div>
+                  
+                </div>
                 <video controls={true} autoPlay={false} style={{height: 80, width: "90%"}}>
                   <source src={track.previewUrl} type="audio/mpeg" />
 

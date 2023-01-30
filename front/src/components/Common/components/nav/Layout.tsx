@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { styled, useTheme } from '@mui/material/styles';
 import Drawer from '@material-ui/core/Drawer'
 import Typography from '@material-ui/core/Typography'
@@ -17,6 +17,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { makeStyles } from '@material-ui/core';
 import MenuIcon from '@mui/icons-material/Menu';
+import api from "../../../../config/configAxios"
 
 const drawerWidth = 360
 
@@ -112,7 +113,19 @@ const Layout: React.FC<LayoutProps> =({ children }) =>{
   const theme = useTheme();
   
   const [open, setOpen] = React.useState(false);
+  const [userinfo, setUserInfo] = React.useState<any>({});
 
+  useEffect(() => {
+    api.get("/Auth/user-info")
+        .then((res :any)=> {
+          console.log(res.data)
+          setUserInfo(res.data);
+          //setTracks(res.data);
+        })
+        .catch((err:any) => {
+          console.log(err);
+        });
+  }, [])
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -157,8 +170,8 @@ const Layout: React.FC<LayoutProps> =({ children }) =>{
           <Typography variant="h5" className={classes.title}>
             TrackByMyDuck
           </Typography>
-          <Typography>Mario</Typography>
-          <Avatar className={classes.avatar} src="/mario-av.png" />
+          <Typography>{userinfo.name}</Typography>
+          <Avatar className={classes.avatar} src="https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=5828015203933188&height=50&width=50&ext=1676768697&hash=AeQLBxHbv0GG71lIu98" />
         </Toolbar>
       </AppBar>
 
@@ -207,3 +220,7 @@ const Layout: React.FC<LayoutProps> =({ children }) =>{
   )
 }
 export default Layout;
+
+function seEffect(arg0: () => void, arg1: never[]) {
+  throw new Error('Function not implemented.');
+}
