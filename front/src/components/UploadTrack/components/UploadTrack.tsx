@@ -2,10 +2,8 @@ import React, { useState } from 'react'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 import { makeStyles } from '@material-ui/core'
 import TextField from '@material-ui/core/TextField'
-import axios from 'axios';
 import TrackCard from './TrackCard'
 import { useNavigate } from 'react-router-dom'
 import api from "./../../../config/configAxios"
@@ -19,16 +17,13 @@ const useStyles = makeStyles({
     }
   })
   
-  const instance = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
-  });
 
 const UploadTrack:React.FC = () => {
     const history = useNavigate ()
     const classes = useStyles()
   //const history = history()
   const [title, setTitle] = useState('')
-  const [titleError, setTitleError] = useState(false)
+  //const [titleError, setTitleError] = useState(false)
 
   const [isTrackValidated, setTrackValidated] = useState(false);
   const [track, setTrack] = useState<any>({});
@@ -73,7 +68,7 @@ const UploadTrack:React.FC = () => {
       
       <form noValidate autoComplete="off" onSubmit={handleSubmit}>
 
-        {isTrackValidated == false ? 
+        {isTrackValidated === false ? 
           <>
             <TextField className={classes.field}
               onChange={(e) => { setTitle(e.target.value) }}
@@ -82,7 +77,7 @@ const UploadTrack:React.FC = () => {
               color="secondary" 
               fullWidth
               required
-              error={titleError}
+              error={false}
             />
             <Button
               //type="submit" 
