@@ -1,12 +1,7 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
-import FacebookLogin from 'react-facebook-login';
 
-const SPACE_DELIMETER = "%20"
-const SCOPES = ["user-read-currently-playing", "user-read-playback-state", "playlist-modify-public"];
-const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMETER)
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -39,7 +34,6 @@ const instance = axios.create({
 const Login :React.FC = () => {
 
     const navigate = useNavigate();
-    const [token, setToken] = useState("");
     //const location = useLocation();
     // useEffect(() => {
     //     console.log(window.location.hash)
@@ -57,9 +51,9 @@ const Login :React.FC = () => {
 
     const responseFacebook = (response:any) => {
       console.log(response)
-      var res = {
-        accessToken: response.accessToken
-      }
+      // var res = {
+      //   accessToken: response.accessToken
+      // }
       axios.post(process.env.REACT_APP_API_URL + "/Auth/facebook-login", {
         AccessToken: response.accessToken, 
         provider: response.graphDomain,

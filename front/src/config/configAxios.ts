@@ -1,4 +1,4 @@
-import axios, { AxiosHeaders, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import axios, { AxiosHeaders, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
 const { REACT_APP_API_URL } = process.env;
 

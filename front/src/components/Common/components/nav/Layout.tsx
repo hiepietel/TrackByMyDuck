@@ -9,12 +9,11 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import { AddCircleOutlineOutlined, SubjectOutlined } from '@material-ui/icons'
 import Toolbar from '@material-ui/core/Toolbar'
-import { format } from 'date-fns'
 import Avatar from '@material-ui/core/Avatar'
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import MuiAppBar from '@mui/material/AppBar';
 import { makeStyles } from '@material-ui/core';
 import MenuIcon from '@mui/icons-material/Menu';
 import api from "../../../../config/configAxios"
@@ -196,7 +195,7 @@ const Layout: React.FC<LayoutProps> =({ children }) =>{
               button 
               key={item.text} 
               onClick={() => history(item.path)}
-              className={location.pathname == item.path ? classes.active : undefined}
+              className={location.pathname === item.path ? classes.active : undefined}
             >
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
@@ -220,7 +219,3 @@ const Layout: React.FC<LayoutProps> =({ children }) =>{
   )
 }
 export default Layout;
-
-function seEffect(arg0: () => void, arg1: never[]) {
-  throw new Error('Function not implemented.');
-}
