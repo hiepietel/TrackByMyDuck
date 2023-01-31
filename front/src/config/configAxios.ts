@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosHeaders, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
 const { REACT_APP_API_URL } = process.env;
 
@@ -14,17 +14,17 @@ const api = () => {
   let instance = axios.create(defaultOptions);
 
   // Set the AUTH token for any request
-  instance.interceptors.request.use((config: AxiosRequestConfig) => {
-    
-    sessionStorage.getItem("token");
+    instance?.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+
     const token = sessionStorage.getItem("token");
     
-    if(!!config.headers) {
-      config.headers= {
-        Authorization :  token ? `${token}` : ''
-      }
-      config.headers['Access-Control-Max-Age'] = 0;
-    }
+    (config.headers as AxiosHeaders).set("Authorization", token ? `${token}` : '');
+    // if(!!config.headers) {
+    //   config.headers= {
+    //     Authorization :  token ? `${token}` : ''
+    //   }
+    //   config.headers['Access-Control-Max-Age'] = 0;
+    // }
     
     return config;
   });
