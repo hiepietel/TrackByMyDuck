@@ -73,7 +73,7 @@ const Login :React.FC = () => {
     return (
       <div>
           <FacebookLogin
-          isDisabled={true}
+          isDisabled={false}
     appId={process.env.REACT_APP_FACEBOOK_APP_ID ?? ""}
     autoLoad={true}
     fields="name,email,picture"
