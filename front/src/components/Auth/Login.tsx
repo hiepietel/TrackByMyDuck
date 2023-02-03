@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-
+import FacebookLogin from 'react-facebook-login';
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -72,12 +72,13 @@ const Login :React.FC = () => {
 //style={{height: "100vh", width: "100%", backgroundColor: "#8C92AC", top: 0, left: 0, position: "fixed"}}
     return (
       <div>
-          {/* <FacebookLogin
+          <FacebookLogin
           isDisabled={true}
     appId={process.env.REACT_APP_FACEBOOK_APP_ID ?? ""}
     autoLoad={true}
     fields="name,email,picture"
-    callback={responseFacebook} />, */}
+    callback={responseFacebook} />
+    
         {/* <div style={{textAlign: "center"}}>
           <h1>Log in to track by my duck</h1>
           <Button variant="contained"
