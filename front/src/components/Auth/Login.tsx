@@ -59,7 +59,9 @@ const Login :React.FC = () => {
         provider: response.graphDomain,
         email: response.email,
         name: response.name,
-        facebookId: response.facebookId
+        facebookId: response.Id,
+        imgHref: response.picture.data.url
+
         })
       .then(res => {
         console.log(res.data)
@@ -91,7 +93,13 @@ const Login :React.FC = () => {
      graphDomain: "response.graphDomain",
         email: "testUser@email.pl",
         name: "Test user",
-        facebookId: 123
+        Id: "123",
+        picture:{
+          data:{
+            url: "https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=5900053150062726&height=50&width=50&ext=1678096991&hash=AeTX005ExFcehQYNu48"
+          }
+        }
+
         })}>Log in</button>
       </div>
 

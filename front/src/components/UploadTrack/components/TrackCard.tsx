@@ -40,7 +40,9 @@ const TrackCard :React.FC<TrackCardProps>= ({track}) => {
           <CardHeader
             theme={theme}
               avatar={
-                <Avatar className={"classes.avatar"}>
+                <Avatar 
+                  className={"classes.avatar"}
+                  src={track.userUrl}>
                 </Avatar>}
               title={track.userName}
               
@@ -59,10 +61,13 @@ const TrackCard :React.FC<TrackCardProps>= ({track}) => {
                 <div>
                   
                 </div>
+                {track.previewUrl ?
                 <video controls={true} autoPlay={false} style={{height: 80, width: "90%"}}>
                   <source src={track.previewUrl} type="audio/mpeg" />
-
                   </video>
+                : <></>
+                }
+                  
                   
           </CardContent>
           </div>
