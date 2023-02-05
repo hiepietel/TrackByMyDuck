@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TrackByMyDuck.Application.Features.Tracks.Queries.GetTracks
+﻿namespace TrackByMyDuck.Application.Features.Tracks.Queries.GetTracks
 {
     public class TrackVm
     {
@@ -16,6 +10,6 @@ namespace TrackByMyDuck.Application.Features.Tracks.Queries.GetTracks
         public string PreviewUrl { get; set; }
         public int UserId { get; set; }
         public string UserName { get; set; }
-        public string UserUrl { get; set; }
+        public string? UserUrl { get; set; }
     }
 }

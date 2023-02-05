@@ -24,6 +24,8 @@ namespace TrackByMyDuck.Persistence.Repositories
                 .Include(x => x.Track.TrackArtists)
                        .ThenInclude(x => x.Artist)
                 .Include(x => x.User)
+                    .OrderByDescending(c => c.CreatedDate.Date)
+                    .ThenByDescending(c => c.CreatedDate.TimeOfDay)
                 .ToListAsync();
         }
     }

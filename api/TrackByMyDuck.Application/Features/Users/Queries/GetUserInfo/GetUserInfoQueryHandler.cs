@@ -35,7 +35,9 @@ namespace TrackByMyDuck.Application.Features.Users.Queries.GetUserInfo
             }
             return new UserInfoVm()
             {
-                Name = user.Name
+                Name = user.Name,
+                Email = user.Email,
+                ImgHref = user.ImgHref         
             };
         }
     }

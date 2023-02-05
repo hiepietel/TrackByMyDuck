@@ -17,5 +17,6 @@ namespace TrackByMyDuck.Application.Features.Users.Commands.LogUser
         [Required]
         public string? Name { get; set; }
         public int FacebookId { get; set; }
+        public string ImgHref { get; set; }
     }
 }

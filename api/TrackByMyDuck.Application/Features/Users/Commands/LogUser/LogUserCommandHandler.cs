@@ -39,6 +39,7 @@ namespace TrackByMyDuck.Application.Features.Users.Commands.LogUser
                     Email = request.Email,
                     FacebookId = request.FacebookId,
                     Name = request.Name,
+                    ImgHref = request.ImgHref
                 });
             }
             var userVm = _mapper.Map<UserVm>(user);

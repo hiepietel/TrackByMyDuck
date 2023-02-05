@@ -35,12 +35,12 @@ namespace TrackByMyDuck.Application.Services
                 return new SpotifyTrack()
                 {
                     Id = track.Id,
-                    //AlbumUrl = track.Album.ImgHref,
+                    ImgHref = track.Album.ImgHref,
+                    Artists = track.TrackArtists.Select(x => x.Artist.Name).ToList(),
                     Name = track.Name,
+                    PreviewUrl = track.PreviewUrl
                 };
             }
-
-
 
             var spotifyTrack = await _spotifyApiService.GetTrackBySpotyfiyId(spotifyTrackId);
 
@@ -93,6 +93,14 @@ namespace TrackByMyDuck.Application.Services
             await _trackRepository.AddAsync(newTrack);
 
             var trackArtistListToAdd = new List<TrackArtist>();
+            artists.ForEach(x =>
+            {
+                trackArtistListToAdd.Add(new TrackArtist()
+                {
+                    TrackId = newTrack.Id,
+                    ArtistId = x.Id,
+                });
+            });
             artistsToAdd.ForEach(x =>
             {
                 trackArtistListToAdd.Add(new TrackArtist()

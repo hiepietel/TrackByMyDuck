@@ -27,7 +27,11 @@ namespace TrackByMyDuck.Persistence.Repositories
 
         public async Task<Track> GetBySpotifyIdAsync(string spotifyTrackId)
         {
-            return await _dbContext.Tracks.FirstOrDefaultAsync(x => x.SpotifyId == spotifyTrackId);
+            return await _dbContext.Tracks
+                .Include(x => x.Album)
+                .Include(x => x.TrackArtists)
+                .ThenInclude(x => x.Artist)
+                .FirstOrDefaultAsync(x => x.SpotifyId == spotifyTrackId);
         }
 
         public async Task<List<Track>> ListAllWithAdditionalData()

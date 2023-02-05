@@ -26,8 +26,8 @@ namespace TrackByMyDuck.Application.Profiles
                 .ForMember(z => z.Artists, x => x.MapFrom(x => x.Track.TrackArtists.Select(x => x.Artist.Name)))
                 .ForMember(n => n.ImgHref, m => m.MapFrom(x => x.Track.Album.ImgHref)) // 
                 .ForMember(c => c.UserId, v => v.MapFrom(v => v.User.Id))
-                .ForMember(c => c.UserName, v => v.MapFrom(v => v.User.Name));
-
+                .ForMember(c => c.UserName, v => v.MapFrom(v => v.User.Name))
+                .ForMember(c => c.UserUrl, v => v.MapFrom(v => v.User.ImgHref));
             CreateMap<Track, AddTrackVm>()
                 .ForMember(x => x.SpotifyTrackId, y => y.MapFrom(x => x.SpotifyId))
                 .ForMember(x => x.PreviewUrl, y => y.MapFrom(x => x.PreviewUrl))
