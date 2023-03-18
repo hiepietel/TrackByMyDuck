@@ -8,7 +8,6 @@ import TrackCard from './TrackCard'
 import { useNavigate } from 'react-router-dom'
 import api from "./../../../config/configAxios"
 
-
 const useStyles = makeStyles({
     field: {
       marginTop: 20,
@@ -17,14 +16,10 @@ const useStyles = makeStyles({
     }
   })
   
-
 const UploadTrack:React.FC = () => {
-    const history = useNavigate ()
-    const classes = useStyles()
-  //const history = history()
+  const history = useNavigate ()
+  const classes = useStyles()
   const [title, setTitle] = useState('')
-  //const [titleError, setTitleError] = useState(false)
-
   const [isTrackValidated, setTrackValidated] = useState(false);
   const [track, setTrack] = useState<any>({});
   
@@ -42,7 +37,6 @@ const UploadTrack:React.FC = () => {
     }
   
   const handleSubmit = () => {
-    console.log();
     if(title !== ""){
         api.post("/api/Track/add-track",{Link:title})
         .then(res => {

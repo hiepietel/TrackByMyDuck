@@ -33,21 +33,22 @@ const TrackCard :React.FC<TrackCardProps>= ({track}) => {
 
 
     return (
-<Grid container justifyContent = "center">
-          <Card elevation={5}>
+      <Grid container justifyContent = "center">
+        <Card elevation={5}>
           <Box sx={{ display: 'flex' }}>
-          <div>
-          <CardHeader
-            theme={theme}
-              avatar={
-                <Avatar 
-                  className={"classes.avatar"}
-                  src={track.userUrl}>
-                </Avatar>}
-              title={track.userName}
+            <div>
+              <CardHeader
+                theme={theme}
+                avatar={
+                  <Avatar 
+                    className={"classes.avatar"}
+                    src={track.userUrl}>
+                  </Avatar>
+                }
+                 title={track.userName}
               
               //subheader={"note.category"}
-            />   
+              />   
               <CardContent style={{ flex: '1 0 auto', width: 320 }}>
                 <Typography component="div" variant="h5">
                   {track.trackName}
@@ -56,10 +57,8 @@ const TrackCard :React.FC<TrackCardProps>= ({track}) => {
                     <Typography variant="subtitle1"  component="div">
                       {note}
                     </Typography>
-
                   )) : <></>}
                 <div>
-                  
                 </div>
                 {track.previewUrl ?
                 <video controls={true} autoPlay={false} style={{height: 80, width: "90%"}}>
@@ -67,19 +66,17 @@ const TrackCard :React.FC<TrackCardProps>= ({track}) => {
                   </video>
                 : <></>
                 }
-                  
-                  
-          </CardContent>
-          </div>
-              <CardMedia
-            component="img"
-            style = {{ width: 320 }}
-            image={track.imgHref}
-            alt="Paella dish"
-          />
-            </Box>
-          </Card>
-          </Grid>
+              </CardContent>
+            </div>
+            <CardMedia
+              component="img"
+              style = {{ width: 320 }}
+              image={track.imgHref}
+              alt="Paella dish"
+            />
+          </Box>
+        </Card>
+      </Grid>
     )
 }
 

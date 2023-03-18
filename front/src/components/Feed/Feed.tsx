@@ -1,24 +1,9 @@
-
 import React, { useEffect, useState } from 'react'
 import Container from '@material-ui/core/Container'
 import TrackCard from '../UploadTrack/components/TrackCard';
 import api from "./../../config/configAxios"
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-
-
-// const instance = axios.create({
-//     baseURL: process.env.REACT_APP_API_URL,
-//     // timeout: 1000,
-//     //headers = 
-//     //headers: new HttpHeaders().set("Authorization", "bearer BQDYhLLQv-daoM1vhdX2DzJ5DThBrbuzEis0WWdXDpCwvMkHkY…HJ0kY6PDJkdaz4zOFxLJOhP_UCe0D-US4voixjhitMHcH5Hgs")
-//   });
-  
-//   const breakpoints = {
-//     default: 3,
-//     1100: 2,
-//     700: 1
-//   };
 
 const Feed :React.FC= () => {
     const [tracks, setTracks] = useState<any[]>([]);
@@ -36,7 +21,7 @@ const Feed :React.FC= () => {
 
 
     return (
-        <Container>
+         <Container>
           {/* <Masonry
             breakpointCols={breakpoints}
             className="my-masonry-grid"
