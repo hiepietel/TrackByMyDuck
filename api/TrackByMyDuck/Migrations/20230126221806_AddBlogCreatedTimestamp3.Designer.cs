@@ -12,8 +12,8 @@ using TrackByMyDuck.Persistence;
 namespace TrackByMyDuck.Migrations
 {
     [DbContext(typeof(TrackByMyDuckContext))]
-    [Migration("20230119224901_MyFirstMigration")]
-    partial class MyFirstMigration
+    [Migration("20230126221806_AddBlogCreatedTimestamp3")]
+    partial class AddBlogCreatedTimestamp3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,15 +72,10 @@ namespace TrackByMyDuck.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("TrackId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("SpotifyId")
                         .IsUnique();
-
-                    b.HasIndex("TrackId");
 
                     b.ToTable("Artists");
                 });
@@ -106,9 +101,6 @@ namespace TrackByMyDuck.Migrations
                     b.Property<string>("SpotifyId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("TrackArtistId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -168,11 +160,36 @@ namespace TrackByMyDuck.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TrackByMyDuck.Domain.Entities.Artist", b =>
+            modelBuilder.Entity("TrackByMyDuck.Domain.Entities.UserTrack", b =>
                 {
-                    b.HasOne("TrackByMyDuck.Domain.Entities.Track", null)
-                        .WithMany("Artists")
-                        .HasForeignKey("TrackId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TrackId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TrackId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserTracks");
                 });
 
             modelBuilder.Entity("TrackByMyDuck.Domain.Entities.Track", b =>
@@ -201,10 +218,27 @@ namespace TrackByMyDuck.Migrations
                     b.Navigation("Artist");
                 });
 
+            modelBuilder.Entity("TrackByMyDuck.Domain.Entities.UserTrack", b =>
+                {
+                    b.HasOne("TrackByMyDuck.Domain.Entities.Track", "Track")
+                        .WithMany()
+                        .HasForeignKey("TrackId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TrackByMyDuck.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Track");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("TrackByMyDuck.Domain.Entities.Track", b =>
                 {
-                    b.Navigation("Artists");
-
                     b.Navigation("TrackArtists");
                 });
 #pragma warning restore 612, 618
