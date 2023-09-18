@@ -1,0 +1,46 @@
+name: Build and deploy dotnet-api
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "api-dotnet/**"
+      - ".github/workflows/dotnet-api_ci.yaml"
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: api-dotnet 
+env: 
+  DOTNET_ROOT : root
+jobs:
+
+  Build:
+    name: Build and publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+          include-prerelease: true
+
+      - name: Build with dotnet
+        run: dotnet build --configuration Release
+
+      - name: Dotnet publish
+        run: dotnet publish -c Release --property:PublishDir='${{ env.DOTNET_ROOT }}/myapp'
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with: 
+          creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.ARM_TENANT_ID }}"}'
+
+      - name: 'Deploy to Azure WebApp'
+        uses: azure/webapps-deploy@v1
+        with:
+          app-name: '${{vars.PREFIX}}-${{vars.APPLICATION }}-${{vars.ENVIRONMENT}}-api'
+          package:  '${{ env.DOTNET_ROOT }}/myapp'
