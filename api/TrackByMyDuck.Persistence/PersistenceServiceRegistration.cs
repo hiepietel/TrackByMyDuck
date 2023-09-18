@@ -3,8 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TrackByMyDuck.Persistence.Repositories;
 using TrackByMyDuck.Application.Contracts.Persistence;
-using System;
-using TrackByMyDuck.Domain.Entities;
 
 namespace TrackByMyDuck.Persistence
 {
@@ -12,7 +10,7 @@ namespace TrackByMyDuck.Persistence
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
-            if (true)
+            if (false) //no db
             {
                 services.AddDbContext<TrackByMyDuckContext>(options =>
                     options.UseSqlServer(configuration.GetConnectionString("TrackByMyDuckDatabase"), b => b.MigrationsAssembly("TrackByMyDuck"))
