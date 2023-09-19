@@ -11,7 +11,7 @@ on:
 
 defaults:
   run:
-    working-directory: api
+    working-directory: api/TrackByMyDuck
 env: 
   DOTNET_ROOT : root
 jobs:
