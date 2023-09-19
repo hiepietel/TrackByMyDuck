@@ -10,7 +10,7 @@ namespace TrackByMyDuck.Persistence
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
-            if (false) //no db
+            if (true) //no db
             {
                 services.AddDbContext<TrackByMyDuckContext>(options =>
                     options.UseSqlServer(configuration.GetConnectionString("TrackByMyDuckDatabase"), b => b.MigrationsAssembly("TrackByMyDuck"))

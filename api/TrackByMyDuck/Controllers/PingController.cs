@@ -22,5 +22,21 @@ namespace TrackByMyDuck.Controllers
             };
             return Ok(result);
         }
+
+        [HttpGet("/db", Name = "EntityFrameworkPing")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
+        [AllowAnonymous]
+        public async Task<ActionResult<object>> EntityFrameworkPing()
+        {
+            var result = new
+            {
+                Message = "Hello, world db",
+                Now = DateTime.Now,
+
+            };
+            return Ok(result);
+        }
+
     }
 }
