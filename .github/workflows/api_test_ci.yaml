@@ -34,6 +34,11 @@ jobs:
       - name: Dotnet publish
         run: dotnet publish -c Release --property:PublishDir='${{ env.DOTNET_ROOT }}/myapp'
 
+      - name: Inspect Published Directory
+        run: |
+          echo "Contents of the published directory:"
+          ls -R '${{ env.DOTNET_ROOT }}/myapp'
+
       - name: Azure Login
         uses: azure/login@v1
         with: 
