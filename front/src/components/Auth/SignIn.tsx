@@ -10,28 +10,28 @@ const instance = axios.create({
   
 
 
-  const SignInFromApi = ( email: string, password: string) =>{
-    axios.post(process.env.REACT_APP_API_URL + "/api/auth/sign-in",{
-    AccessToken: "ASdas", 
-    provider: email,
-    email: email,
-    name: email,
-    facebookId: 123,
-    imgHref: ""
-}
-    )
-    .then(res => {
-      console.log(res.data)
-      //sessionStorage.setItem("token", `bearer ${res.data.accessToken}`);
-      sessionStorage.setItem("token", `bearer ${res.data.accessToken}`);
-      instance.defaults.headers.common['Authorization'] = unescape(encodeURIComponent(`bearer ${res.data}` ));
-    })
-  }
 
 
 
 
 const SignIn = () => {
+
+    const SignInFromApi = ( name: string, password: string) =>{
+        axios.post(process.env.REACT_APP_API_URL + "/api/auth/sign-in",{
+            name: name,
+    
+    }
+        )
+        .then(res => {
+          console.log(res.data)
+          //sessionStorage.setItem("token", `bearer ${res.data.accessToken}`);
+          sessionStorage.setItem("token", `bearer ${res.data.accessToken}`);
+          instance.defaults.headers.common['Authorization'] = unescape(encodeURIComponent(`bearer ${res.data}` ));
+          navigate("/main") 
+        })
+      }
+    
+
 
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
@@ -44,7 +44,7 @@ const SignIn = () => {
     
         // You can add your login logic here, e.g., send a request to your backend API.
         console.log('Email:', email);
-        navigate("/main") 
+        
        // console.log('Password:', password);
       };
 
