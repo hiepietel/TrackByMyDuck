@@ -115,7 +115,7 @@ const Layout: React.FC<LayoutProps> =({ children }) =>{
   const [userinfo, setUserInfo] = React.useState<any>({});
 
   useEffect(() => {
-    api.get("/Auth/user-info")
+    api.get("api/Auth/user-info")
         .then((res :any)=> {
           console.log(res.data)
           setUserInfo(res.data);

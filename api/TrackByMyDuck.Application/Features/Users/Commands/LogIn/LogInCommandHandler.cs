@@ -12,37 +12,31 @@ using TrackByMyDuck.Domain.Entities;
 
 namespace TrackByMyDuck.Application.Features.Users.Commands.LogUser
 {
-    public class LogUserCommandHandler : IRequestHandler<LogUserCommand, UserVm>
+    public class LogInCommandHandler : IRequestHandler<LogInCommand, LogInUserVm>
     {
         private readonly IAuthService _authService;
         private readonly IUserRepository _usersRepository;
         private readonly IMapper _mapper;
-        public LogUserCommandHandler(IAuthService authService, IUserRepository usersRepository, IMapper mapper)
+        public LogInCommandHandler(IAuthService authService, IUserRepository usersRepository, IMapper mapper)
         {
             _authService = authService;
             _usersRepository = usersRepository;
             _mapper = mapper;
         }
 
-        public async Task<UserVm> Handle(LogUserCommand request, CancellationToken cancellationToken)
+        public async Task<LogInUserVm> Handle(LogInCommand request, CancellationToken cancellationToken)
         {
 
             //_authService.ValidateFacebookToken()
 
-            string token = await _authService.CreateToken(request.Name, request.FacebookId.ToString(), request.Email);
+            string token = await _authService.CreateToken(request.Name, request.Name.ToString(), request.Name);
 
-            var user = await _usersRepository.GetByMail(request.Email);
+            var user = await _usersRepository.GetByMail(request.Name);
             if (user == null)
             {
-                user = await _usersRepository.AddAsync(new User
-                {
-                    Email = request.Email,
-                    FacebookId = request.FacebookId,
-                    Name = request.Name,
-                    ImgHref = request.ImgHref
-                });
+                throw new Exception(":)");
             }
-            var userVm = _mapper.Map<UserVm>(user);
+            var userVm = _mapper.Map<LogInUserVm>(user);
             
             userVm.AccessToken = token;
             

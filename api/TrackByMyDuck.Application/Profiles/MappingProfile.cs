@@ -9,6 +9,7 @@ using TrackByMyDuck.Application.Features.Tracks.Commands.CheckTrack;
 using TrackByMyDuck.Application.Features.Tracks.Queries.GetShowTrack;
 using TrackByMyDuck.Application.Features.Tracks.Queries.GetTracks;
 using TrackByMyDuck.Application.Features.Users.Commands.LogUser;
+using TrackByMyDuck.Application.Features.Users.Commands.SignUp;
 using TrackByMyDuck.Application.Models.Spotify;
 using TrackByMyDuck.Domain.Entities;
 
@@ -42,7 +43,9 @@ namespace TrackByMyDuck.Application.Profiles
             CreateMap<Track, SpotifyTrack>()
                 .ForMember(z => z.PreviewUrl, y => y.MapFrom(x => x.PreviewUrl));
             CreateMap<Track, ShowTrackVm>();
-            CreateMap<User, UserVm>();
+            CreateMap<User, FacebookUserVm>();
+            CreateMap<User, LogInUserVm>();
+            CreateMap<User, NewUserVm>();
         }
     }
 }

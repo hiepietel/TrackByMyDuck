@@ -2,6 +2,8 @@ import axios from 'axios'
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import FacebookLogin from 'react-facebook-login';
+import SignIn from './SignIn';
+import SignUp from './SignUp';
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -54,7 +56,7 @@ const Login :React.FC = () => {
       // var res = {
       //   accessToken: response.accessToken
       // }
-      axios.post(process.env.REACT_APP_API_URL + "/Auth/facebook-login", {
+      axios.post(process.env.REACT_APP_API_URL + "/api/Auth/facebook-login", {
         AccessToken: response.accessToken, 
         provider: response.graphDomain,
         email: response.email,
@@ -88,19 +90,8 @@ const Login :React.FC = () => {
                 Login
           </Button>
         </div> */}
-<button onClick={()=> responseFacebook({       
-     accessToken: "accessToken", 
-     graphDomain: "response.graphDomain",
-        email: "testUser@email.pl",
-        name: "Test user",
-        Id: "123",
-        picture:{
-          data:{
-            url: "https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=5900053150062726&height=50&width=50&ext=1678096991&hash=AeTX005ExFcehQYNu48"
-          }
-        }
-
-        })}>Log in</button>
+    <SignIn />
+    <SignUp />
       </div>
 
     );

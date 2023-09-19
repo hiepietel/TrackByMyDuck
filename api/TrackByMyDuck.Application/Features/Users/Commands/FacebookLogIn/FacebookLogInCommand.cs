@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace TrackByMyDuck.Application.Features.Users.Commands.LogUser
 {
 
-    public class LogUserCommand: IRequest<UserVm>
+    public class FacebookLogInCommand: IRequest<FacebookUserVm>
     {
         public string? Email { get; set; }
 
