@@ -22,8 +22,8 @@ namespace TrackByMyDuck.Persistence
                     (o => o.UseInMemoryDatabase("MyDatabase"));
             }
 
-            services.AddDbContext<TrackByMyDuckContext>
-                    (o => o.UseInMemoryDatabase("MyDatabase"));
+            //services.AddDbContext<TrackByMyDuckContext>
+            //        (o => o.UseInMemoryDatabase("MyDatabase"));
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
 
