@@ -1,14 +1,92 @@
-import axios from 'axios'
-import React from 'react'
-import { useNavigate } from 'react-router-dom';
-import FacebookLogin from 'react-facebook-login';
-import SignIn from './SignIn';
-import SignUp from './SignUp';
+import axios from "axios";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
+import FacebookLogIn from "./FacebookLogIn";
+import { Box, Container, Tab, Tabs, Typography } from "@material-ui/core";
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
 });
 
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function CustomTabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
+const Login: React.FC = () => {
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+
+  return (
+    <Container maxWidth="sm">
+      <Typography variant="h4" component="h4">
+        Track by my duck
+      </Typography>
+
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs
+          value={value}
+          onChange={(ev: any, newValue: any) => {
+            handleChange(ev, newValue);
+          }}
+          aria-label="basic tabs example"
+        >
+          <Tab label="Sign In" {...a11yProps(0)} />
+          <Tab label="Sign Up" {...a11yProps(1)} />
+          <Tab label="Fogin with Facebook" {...a11yProps(2)} />
+        </Tabs>
+      </Box>
+      <CustomTabPanel value={value} index={0}>
+        <SignIn />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={1}>
+        <SignUp />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={2}>
+        <FacebookLogIn />
+      </CustomTabPanel>
+
+      {/* <FacebookLogIn />
+      <SignIn />
+      <SignUp /> */}
+    </Container>
+  );
+};
+
+export default Login;
 
 // const getReurnedParamsFromSpotifyAuth = (hash:any) => {
 //   console.log(hash)
@@ -33,68 +111,18 @@ const instance = axios.create({
 //     })
 
 // }
-const Login :React.FC = () => {
 
-    const navigate = useNavigate();
-    //const location = useLocation();
-    // useEffect(() => {
-    //     console.log(window.location.hash)
-    //   if(window.location.hash){
-    //     console.log(window.location.href);
-    //     var token = getReurnedParamsFromSpotifyAuth(window.location.hash);
-    //     logiToApi(token)
-    //     navigate("/main")
-    //   }
-    // });
-    // const handleLogin = () =>{
-      
-    //   window.location.href = `${process.env.REACT_APP_SPOTIFY_AUTHORIZE_ENDPOINT}?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URL_AFTER_LOGIN}&scope=${SCOPES_URL_PARAM}&response_type=token&show_dialog=true`
-    // }
+//const location = useLocation();
+// useEffect(() => {
+//     console.log(window.location.hash)
+//   if(window.location.hash){
+//     console.log(window.location.href);
+//     var token = getReurnedParamsFromSpotifyAuth(window.location.hash);
+//     logiToApi(token)
+//     navigate("/main")
+//   }
+// });
+// const handleLogin = () =>{
 
-    const responseFacebook = (response:any) => {
-      console.log(response)
-      // var res = {
-      //   accessToken: response.accessToken
-      // }
-      axios.post(process.env.REACT_APP_API_URL + "/api/Auth/facebook-login", {
-        AccessToken: response.accessToken, 
-        provider: response.graphDomain,
-        email: response.email,
-        name: response.name,
-        facebookId: response.Id,
-        imgHref: response.picture.data.url
-
-        })
-      .then(res => {
-        console.log(res.data)
-        sessionStorage.setItem("token", `bearer ${res.data.accessToken}`);
-        instance.defaults.headers.common['Authorization'] = unescape(encodeURIComponent(`bearer ${res.data}` ));
-        navigate("/main") 
-      })
-    }
-
-//style={{height: "100vh", width: "100%", backgroundColor: "#8C92AC", top: 0, left: 0, position: "fixed"}}
-    return (
-      <div>
-          <FacebookLogin
-          isDisabled={false}
-    appId={process.env.REACT_APP_FACEBOOK_APP_ID ?? ""}
-    autoLoad={true}
-    fields="name,email,picture"
-    callback={responseFacebook} />
-    
-        {/* <div style={{textAlign: "center"}}>
-          <h1>Log in to track by my duck</h1>
-          <Button variant="contained"
-              onClick={handleLogin}>
-                Login
-          </Button>
-        </div> */}
-    <SignIn />
-    <SignUp />
-      </div>
-
-    );
-}
-
-export default Login
+//   window.location.href = `${process.env.REACT_APP_SPOTIFY_AUTHORIZE_ENDPOINT}?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URL_AFTER_LOGIN}&scope=${SCOPES_URL_PARAM}&response_type=token&show_dialog=true`
+// }

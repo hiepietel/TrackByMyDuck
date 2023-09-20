@@ -102,10 +102,11 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 interface LayoutProps{
-    children: any
+    children: any,
+    userInfo : any
 }
 
-const Layout: React.FC<LayoutProps> =({ children }) =>{
+const Layout: React.FC<LayoutProps> =({ children, userInfo }) =>{
   const classes = useStyles()
   const history = useNavigate ()
   const location = useLocation()

@@ -6,6 +6,7 @@ import { createMuiTheme, ThemeProvider } from '@mui/material';
 import { purple } from '@mui/material/colors';
 import UploadTrack from './components/UploadTrack/components/UploadTrack';
 import Feed from './components/Feed/Feed';
+import MainLayout from './components/Common/components/nav/MainLayout';
 
 
 const theme = createMuiTheme({
@@ -28,13 +29,13 @@ const App :React.FC= () => {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <Layout>
+        <MainLayout>
           <Routes>
             <Route  path="/" element={<Login /> }/>
             <Route path="create" element={<UploadTrack />} /> 
             <Route path="main" element={<Feed />} />
           </Routes>
-        </Layout>
+        </MainLayout>
       </BrowserRouter>
     </ThemeProvider>
     );

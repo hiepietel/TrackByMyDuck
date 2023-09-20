@@ -28,10 +28,18 @@ namespace TrackByMyDuck.Application.Features.Users.Queries.GetUserInfo
         {
             var data = await _authService.GetUserInfo();
             var user = await _usersRepository.GetByMail(data);
+
+            
             if (user == null)
             {
-                //unathorized
-                return new UserInfoVm();
+                user = await _usersRepository.GetByName(data);
+                if (user == null)
+                {
+                    return new UserInfoVm();
+                }
+
+                    //unathorized
+                   
             }
             return new UserInfoVm()
             {

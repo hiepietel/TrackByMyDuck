@@ -1,14 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TrackByMyDuck.Application.Contracts.Infrastructure;
 using TrackByMyDuck.Application.Contracts.Persistence;
-using TrackByMyDuck.Application.Features.Tracks.Queries.GetShowTrack;
-using TrackByMyDuck.Domain.Entities;
 
 namespace TrackByMyDuck.Application.Features.Users.Commands.LogUser
 {
@@ -31,7 +24,7 @@ namespace TrackByMyDuck.Application.Features.Users.Commands.LogUser
 
             string token = await _authService.CreateToken(request.Name, request.Name.ToString(), request.Name);
 
-            var user = await _usersRepository.GetByMail(request.Name);
+            var user = await _usersRepository.GetByName(request.Name);
             if (user == null)
             {
                 throw new Exception(":)");

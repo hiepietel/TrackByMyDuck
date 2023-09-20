@@ -10,10 +10,10 @@ const instance = axios.create({
   
 
 
-  const SignUpFromApi = ( email: string, password: string) =>{
+  const SignUpFromApi = ( name: string, email: string, password: string) =>{
     axios.post(process.env.REACT_APP_API_URL + "/api/auth/sign-up",{
     email: email,
-    name: email,
+    name: name,
     password: password
 }
     )
@@ -33,11 +33,11 @@ const SignUp = () => {
     const navigate = useNavigate();
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
-
+    const [email, setEmail] = useState('');
     const handleSubmit = (e: any) => {
         e.preventDefault();
     
-        SignUpFromApi(name, password)
+        SignUpFromApi(name, email, password)
     
         // You can add your login logic here, e.g., send a request to your backend API.
         console.log('Email:', name);
@@ -50,7 +50,7 @@ const SignUp = () => {
     <Container maxWidth="xs">
     <form onSubmit={handleSubmit}>
       <Typography variant="h5" align="center" gutterBottom>
-        SignUp
+        Create a new account
       </Typography>
       <Box sx={{ mt: 3 }}>
         <TextField
@@ -61,6 +61,17 @@ const SignUp = () => {
           required
           value={name}
           onChange={(e) => setName(e.target.value)}
+        />
+      </Box>
+      <Box sx={{ mt: 2 }}>
+        <TextField
+          type="email"
+          label="Email"
+          variant="outlined"
+          fullWidth
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </Box>
       <Box sx={{ mt: 2 }}>
