@@ -1,14 +1,9 @@
 import axios from "axios";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import FacebookLogIn from "./FacebookLogIn";
 import { Box, Container, Tab, Tabs, Typography } from "@material-ui/core";
-
-const instance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
-});
 
 interface TabPanelProps {
   children?: React.ReactNode;

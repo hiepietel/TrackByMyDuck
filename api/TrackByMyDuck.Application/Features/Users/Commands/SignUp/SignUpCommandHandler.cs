@@ -1,13 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TrackByMyDuck.Application.Contracts.Infrastructure;
 using TrackByMyDuck.Application.Contracts.Persistence;
-using TrackByMyDuck.Application.Features.Users.Commands.LogUser;
 using TrackByMyDuck.Domain.Entities;
 
 namespace TrackByMyDuck.Application.Features.Users.Commands.SignUp
@@ -37,6 +31,10 @@ namespace TrackByMyDuck.Application.Features.Users.Commands.SignUp
                     Name = request.Name,
                     ImgHref = ""
                 });
+            }
+            else
+            {
+                return null;
             }
             var userVm = _mapper.Map<NewUserVm>(user);
 

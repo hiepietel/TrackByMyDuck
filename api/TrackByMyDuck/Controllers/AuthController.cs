@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TrackByMyDuck.Application.Contracts.Infrastructure;
-using TrackByMyDuck.Application.Models.Authentication;
 using MediatR;
 using TrackByMyDuck.Application.Features.Users.Commands.LogUser;
 using TrackByMyDuck.Application.Features.Users.Queries.GetUserInfo;
@@ -50,6 +46,12 @@ namespace TrackByMyDuck.Controllers
             return Ok(token);
         }
 
+        [Route("sign-out")]
+        [HttpPost]
+        public async Task<IActionResult> SingOut()
+        {
+            return Ok();
+        }
 
         [Route("user-info")]
         [HttpGet]

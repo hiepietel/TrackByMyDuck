@@ -1,7 +1,6 @@
 import React from 'react';
 import Login from './components/Auth/Login';
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import Layout from './components/Common/components/nav/Layout';
 import { createMuiTheme, ThemeProvider } from '@mui/material';
 import { purple } from '@mui/material/colors';
 import UploadTrack from './components/UploadTrack/components/UploadTrack';

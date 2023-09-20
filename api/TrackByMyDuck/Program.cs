@@ -76,4 +76,34 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+//app.Use(async (context, next) =>
+//{
+//    //await context.Response.WriteAsync("Before Invoke from 1st app.Use()\n");
+//    Console.WriteLine(context.Request.Query.ToString());
+//    await next();
+//    //await context.Response.WriteAsync("After Invoke from 1st app.Use()\n");
+//});
+
+//app.Run(async context =>
+//{
+//    //await context.Response.WriteAsync("Hello world!");
+//});
+
+
 app.Run();
+
+public class MyMiddleware
+{
+    private readonly RequestDelegate _next;
+
+    public MyMiddleware(RequestDelegate next)
+    {
+        _next = next;
+    }
+
+    public Task Invoke(HttpContext httpContext)
+    {
+
+        return _next(httpContext);
+    }
+}

@@ -11,7 +11,7 @@ const MainLayout: React.FC<LayoutProps> = ({ children }) => {
   const [userinfo, setUserInfo] = React.useState<any>({});
   const [aoutheticated, setAutheticated] = React.useState<boolean>(false);
   useEffect(() => {
-    if (location.pathname == "/main" || location.pathname == "/create") {
+    if (location.pathname === "/main" || location.pathname === "/create") {
      // console.log(location.pathname);
       api
         .get("api/Auth/user-info")
@@ -24,7 +24,7 @@ const MainLayout: React.FC<LayoutProps> = ({ children }) => {
           console.log(err);
         });
     }
-    if(location.pathname == "/")
+    if(location.pathname === "/")
     {
       console.log(location.pathname)
       setAutheticated(false)

@@ -1,14 +1,11 @@
 import { Box, Button, Container, TextField, Typography } from '@material-ui/core';
 import axios from 'axios';
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 const instance = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
   });
-
-  
-
 
   const SignUpFromApi = ( name: string, email: string, password: string) =>{
     axios.post(process.env.REACT_APP_API_URL + "/api/auth/sign-up",{
