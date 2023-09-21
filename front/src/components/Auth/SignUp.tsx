@@ -1,7 +1,6 @@
 import { Box, Button, Container, TextField, Typography } from '@material-ui/core';
 import axios from 'axios';
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
 
 const instance = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
@@ -23,8 +22,6 @@ const instance = axios.create({
   }
 
 const SignUp = () => {
-
-    const navigate = useNavigate();
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
