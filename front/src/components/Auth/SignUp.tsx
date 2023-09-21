@@ -22,9 +22,6 @@ const instance = axios.create({
     })
   }
 
-
-
-
 const SignUp = () => {
 
     const navigate = useNavigate();

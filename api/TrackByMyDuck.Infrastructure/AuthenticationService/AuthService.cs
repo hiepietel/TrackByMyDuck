@@ -13,6 +13,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using TrackByMyDuck.Domain.Entities;
 using Microsoft.AspNetCore.Http;
+using System.Security.Cryptography;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace TrackByMyDuck.Infrastructure.AuthenticationService
 {
@@ -79,6 +81,7 @@ namespace TrackByMyDuck.Infrastructure.AuthenticationService
             }
             return result;
         }
+
 
         //private void SetRefreshToken(RefreshToken newRefreshToken)
         //{

@@ -1,7 +1,20 @@
 using TrackByMyDuck.Application.Services;
+using TrackByMyDuck.Infrastructure.AuthenticationService;
 
 namespace TrackByMyDuck.UnitTests
 {
+    public class PasswordServiceTests
+    {
+
+        [Test]
+        public async Task Test()
+        {
+            var passwordService = new PasswordService();
+            var result = passwordService.EncryptPassword("test");
+        }
+    }
+
+
     public class Tests
     {
         [SetUp]

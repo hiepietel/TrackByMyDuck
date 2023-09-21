@@ -20,6 +20,7 @@ namespace TrackByMyDuck.Infrastructure
             services.AddTransient<ISpotifyLinkExtractorService, SpotifyLinkExtractorService>();
             services.AddTransient<ISpotifyApiService, SpotifyApiService>();
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IPasswordService, PasswordService>();
             services.AddTransient<IUserTrackService, UserTrackService>();
 
             return services;

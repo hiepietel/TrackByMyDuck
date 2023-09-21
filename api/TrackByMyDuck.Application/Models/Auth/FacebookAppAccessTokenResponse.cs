@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-s
 namespace TrackByMyDuck.Application.Models.Authentication
 {
     public class FacebookAppAccessTokenResponse
