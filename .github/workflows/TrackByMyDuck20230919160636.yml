@@ -2,7 +2,7 @@ name: Build and deploy .NET Core application to Web App TrackByMyDuck20230919160
 on:
   push:
     branches:
-    - sprint_two_feature/infra
+    - sprint_two
 env:
   AZURE_WEBAPP_NAME: TrackByMyDuck20230919160636
   AZURE_WEBAPP_PACKAGE_PATH: TrackByMyDuck/published
