@@ -26,14 +26,26 @@ jobs:
       run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
     - name: Publish
       run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
-    - name: Deploy to Azure WebApp
-      uses: azure/webapps-deploy@v2
+    # - name: Deploy to Azure WebApp
+    #   uses: azure/webapps-deploy@v2
+    #   with:
+    #     app-name: ${{ env.AZURE_WEBAPP_NAME }}
+    #     publish-profile: ${{ secrets.TrackByMyDuck20230919160636_FFFF }}
+    #     package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+    # - name: Publish Artifacts
+    #   uses: actions/upload-artifact@v1.0.0
+    #   with:
+    #     name: webapp
+    #     path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+
+    - name: Azure Login
+      uses: azure/login@v1
+      with: 
+        creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.ARM_TENANT_ID }}"}'
+
+    - name: 'Deploy to Azure WebApp'
+      uses: azure/webapps-deploy@v1
       with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.TrackByMyDuck20230919160636_FFFF }}
+        app-name: '${{vars.PREFIX}}-${{vars.APPLICATION }}-${{vars.ENVIRONMENT}}-api-test'
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-    - name: Publish Artifacts
-      uses: actions/upload-artifact@v1.0.0
-      with:
-        name: webapp
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
