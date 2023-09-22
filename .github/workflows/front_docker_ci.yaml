@@ -46,6 +46,10 @@ jobs:
             docker push jptrackbymyduckdevcr.azurecr.io/app:${{ github.sha }}
         working-directory: ./front
 
+      - uses: azure/webapps-deploy@v2
+        with:
+          app-name: '${{vars.PREFIX}}-${{vars.APPLICATION }}-${{vars.ENVIRONMENT}}-wafc'
+          images: 'jptrackbymyduckdevcr.azurecr.io/app:${{ github.sha }}'
 
       - name: "az update"
         run: |
