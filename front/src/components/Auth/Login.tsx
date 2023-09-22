@@ -47,7 +47,7 @@ const Login: React.FC = () => {
   return (
     <Container maxWidth="sm">
       <Typography variant="h4" component="h4">
-        Track by my duck
+        Track by my duck :D
       </Typography>
 
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
