@@ -42,6 +42,16 @@ jobs:
             docker push jptrackbymyduckdevcr.azurecr.io/app:latest
         working-directory: ./front
 
+      - name: 'Deploy to Azure Container Instances'
+        uses: 'azure/aci-deploy@v1'
+        with:
+            resource-group: "${{vars.PREFIX}}-${{vars.APPLICATION }}-${{vars.ENVIRONMENT}}-rg"
+            dns-name-label: url-for-container
+            image: jptrackbymyduckdevcr.azurecr.io/app:latest
+            registry-username: ${{ secrets.DOCKER_USERNAME }}
+            registry-password: ${{ secrets.DOCKER_PASSWORD }}
+            name: jp-trackbymyduck-dev-front-ci2
+            location: 'west us'
     #   - name: Build the frontend image and push it to ACR
     #     uses: docker/build-push-action@v5
         
