@@ -21,4 +21,4 @@ jobs:
         with:
           push: true
           tags: jptrackbymyduckdevcr.azurecr.io/aspcoresample:${{ github.sha }}
-          file: front/Dockerfile
+          file: front/Dockerfile.ci
