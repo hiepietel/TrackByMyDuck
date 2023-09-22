@@ -54,7 +54,7 @@ jobs:
             image: jptrackbymyduckdevcr.azurecr.io/app:${{ github.sha }}
             registry-username: ${{ secrets.DOCKER_USERNAME }}
             registry-password: ${{ secrets.DOCKER_PASSWORD }}
-            name: jp-trackbymyduck-dev-front-ci-3
+            name: jp-trackbymyduck-dev-front-ci-2
             location: 'polandcentral'
     #   - name: Build the frontend image and push it to ACR
     #     uses: docker/build-push-action@v5
