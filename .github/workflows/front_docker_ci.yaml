@@ -28,7 +28,7 @@ jobs:
         
         with:
           push: true
-          tags: jptrackbymyduckdevcr.azurecr.io/app:${{ github.sha }}
+          tags: jptrackbymyduckdevcr.azurecr.io/app:latest
           file: front/Dockerfile
           context: "./front"
           
