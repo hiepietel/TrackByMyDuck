@@ -52,7 +52,9 @@ jobs:
             az container create -g ${{vars.PREFIX}}-${{vars.APPLICATION }}-${{vars.ENVIRONMENT}}-rg \
                 --name jp-trackbymyduck-dev-front-ci-2 \
                 --image jptrackbymyduckdevcr.azurecr.io/app:${{ github.sha }} \
-                --ports 80
+                --ports 80 \
+                --registry-username ${{ secrets.DOCKER_USERNAME }} \
+                --registry-password ${{ secrets.DOCKER_PASSWORD }}
 
       - name: 'Deploy to Azure Container Instances'
         uses: 'azure/aci-deploy@v1'
