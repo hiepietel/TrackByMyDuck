@@ -1,23 +1,22 @@
-# pull official base image
-FROM node:13.12.0-alpine
+FROM node:15.4 as build
 
-# set working directory
 WORKDIR /app
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+COPY package*.json .
+RUN npm install
+COPY . .
+RUN npm run build
 
-# install app dependencies
-COPY package.json ./
-COPY package-lock.json ./
-RUN npm install --silent
-RUN npm install react-scripts@3.4.1 -g --silent
+FROM nginx:1.19
 
-# add app
-COPY . ./
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /app/build /usr/share/nginx/html
 
-# start app
-CMD ["npm", "start"]
+#docker build -t track-by-my-duck-front-con .
+#docker run -p :80 track-by-my-duck-front-con
 
-#docker build -t sample:dev .
-#docker run -it --rm -v ${PWD}:/app -v /app/node_modules -p 3001:3000 -e CHOKIDAR_USEPOLLING=true sample:dev
+#az login --use-device-code
+#az acr login --name jptrackbymyduckdevcr.azurecr.io
+#docker tag track-by-my-duck-front-con jptrackbymyduckdevcr.azurecr.io/app
+#az acr update -n jptrackbymyduckdevcr --admin-enabled true
+#docker push  jptrackbymyduckdevcr.azurecr.io/app

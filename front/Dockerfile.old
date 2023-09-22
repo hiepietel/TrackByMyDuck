@@ -1,0 +1,37 @@
+# pull official base image
+FROM node:16.13.1-alpine as build
+
+# set working directory
+WORKDIR /app
+
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
+# install app dependencies
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm ci --silent
+RUN npm install react-scripts@3.4.1 -g --silent
+
+# add app
+COPY . ./
+
+RUN npm run build
+
+FROM nginx:stable-alpine
+COPY --from=build /app/build /use/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+
+CMD /usr/sbin/nginx -g "daemon off;"
+#CMD ["nginx", "-g", "daemon off;"]
+
+#new docker build -t 
+#docker build -t front .
+#docker run -d -p 80:80 front
+
+# start app
+#CMD ["npm", "start"]
+
+#docker build -t sample:dev .
+#docker run -it --rm -v ${PWD}:/app -v /app/node_modules -p 3001:3000 -e CHOKIDAR_USEPOLLING=true sample:dev
