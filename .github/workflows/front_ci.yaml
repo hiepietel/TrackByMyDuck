@@ -1,8 +1,8 @@
 name: Build and deploy front to web app
 on: 
-  push:
-    branches:
-      - sprint_two
+  # push:
+  #   branches:
+  #     - sprint_two
   #   paths:
   #   - "front/**"
   #   - ".github/workflows/front_ci.yaml"

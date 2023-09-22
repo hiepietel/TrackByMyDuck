@@ -30,4 +30,5 @@ jobs:
           push: true
           tags: jptrackbymyduckdevcr.azurecr.io/aspcoresample:${{ github.sha }}
           file: Dockerfile
+          context: ./front
           
