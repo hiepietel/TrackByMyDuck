@@ -46,7 +46,7 @@ jobs:
       - name: Deploy Docker Image to WebApp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: "${{vars.PREFIX}}-${{vars.APPLICATION }}-${{vars.ENVIRONMENT}}-wafc"
+          app-name: "${{vars.PREFIX}}-${{vars.APPLICATION }}-${{vars.ENVIRONMENT}}-api-wafc"
           images: "jptrackbymyduckdevcr.azurecr.io/api:${{ github.sha }}"
 
       # - name: "az update"
