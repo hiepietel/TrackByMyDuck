@@ -51,7 +51,7 @@ jobs:
             registry-username: ${{ secrets.DOCKER_USERNAME }}
             registry-password: ${{ secrets.DOCKER_PASSWORD }}
             name: jp-trackbymyduck-dev-front-ci
-            location: 'west us'
+            location: 'polandcentral'
     #   - name: Build the frontend image and push it to ACR
     #     uses: docker/build-push-action@v5
         
