@@ -29,17 +29,21 @@ jobs:
             login-server: jptrackbymyduckdevcr.azurecr.io
             username: ${{ secrets.DOCKER_USERNAME }}
             password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Set Docker Image Tag
+        id: set-image-tag
+        run: echo "github.sha=${{ github.sha }}"
+
 
       - name: Build Docker Image
         run: |
-            docker build -t jptrackbymyduckdevcr.azurecr.io/app:latest \
+            docker build -t jptrackbymyduckdevcr.azurecr.io/app:${{ github.sha }} \
                 --build-arg REACT_APP_API_URL="https://jp-trackbymyduck-dev-api-test.azurewebsites.net" \
                 -f Dockerfile.ci .
         working-directory: ./front
 
       - name: Push Docker Image to ACR
         run: |
-            docker push jptrackbymyduckdevcr.azurecr.io/app:latest
+            docker push jptrackbymyduckdevcr.azurecr.io/app:${{ github.sha }}
         working-directory: ./front
 
       - name: 'Deploy to Azure Container Instances'
@@ -47,7 +51,7 @@ jobs:
         with:
             resource-group: "${{vars.PREFIX}}-${{vars.APPLICATION }}-${{vars.ENVIRONMENT}}-rg"
             dns-name-label: url-for-container
-            image: jptrackbymyduckdevcr.azurecr.io/app:latest
+            image: jptrackbymyduckdevcr.azurecr.io/app:${{ github.sha }}
             registry-username: ${{ secrets.DOCKER_USERNAME }}
             registry-password: ${{ secrets.DOCKER_PASSWORD }}
             name: jp-trackbymyduck-dev-front-ci-3
