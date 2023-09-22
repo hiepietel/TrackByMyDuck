@@ -31,10 +31,10 @@ jobs:
             password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker Image
-        env: 
-            REACT_APP_API_URL: "https://jp-trackbymyduck-dev-api-test.azurewebsites.net"
         run: |
-            docker build -t jptrackbymyduckdevcr.azurecr.io/app:latest .
+            docker build -t jptrackbymyduckdevcr.azurecr.io/app:latest \
+                --build-arg REACT_APP_API_URL="https://jp-trackbymyduck-dev-api-test.azurewebsites.net" \
+                -f Dockerfile.ci .
         working-directory: ./front
 
       - name: Push Docker Image to ACR
