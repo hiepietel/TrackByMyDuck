@@ -28,7 +28,7 @@ jobs:
         
         with:
           push: true
-          tags: jptrackbymyduckdevcr.azurecr.io/app
+          tags: jptrackbymyduckdevcr.azurecr.io
           file: front/Dockerfile
           context: "./front"
           
