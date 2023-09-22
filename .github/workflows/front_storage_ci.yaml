@@ -1,4 +1,4 @@
-name: Build and deploy front to storage account
+name: front // Build and deploy front to storage account
 on: 
   push:
     branches:

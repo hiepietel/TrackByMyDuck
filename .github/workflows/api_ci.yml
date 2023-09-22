@@ -1,4 +1,4 @@
-name: api // Build and deploy api to Web App 
+name: api // Build and deploy to Web App 
 on:
   push:
     branches:
