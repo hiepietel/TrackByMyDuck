@@ -54,7 +54,8 @@ jobs:
                 --image jptrackbymyduckdevcr.azurecr.io/app:${{ github.sha }} \
                 --ports 80 \
                 --registry-username ${{ secrets.DOCKER_USERNAME }} \
-                --registry-password ${{ secrets.DOCKER_PASSWORD }}
+                --registry-password ${{ secrets.DOCKER_PASSWORD }} \ 
+                --location polandcentral
 
       - name: 'Deploy to Azure Container Instances'
         uses: 'azure/aci-deploy@v1'
