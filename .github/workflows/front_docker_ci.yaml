@@ -49,12 +49,12 @@ jobs:
 
       - name: "az update"
         run: |
-            az container create --resource-group ${{vars.PREFIX}}-${{vars.APPLICATION }}-${{vars.ENVIRONMENT}}-rg \
-                --name jp-trackbymyduck-dev-front-ci-2 \
-                --image jptrackbymyduckdevcr.azurecr.io/app:${{ github.sha }} \
-                --ports 80 \
-                --registry-username ${{ secrets.DOCKER_USERNAME }} \
-                --registry-password ${{ secrets.DOCKER_PASSWORD }} \ 
+            az container create --resource-group ${{vars.PREFIX}}-${{vars.APPLICATION }}-${{vars.ENVIRONMENT}}-rg 
+                --name jp-trackbymyduck-dev-front-ci-2 
+                --image jptrackbymyduckdevcr.azurecr.io/app:${{ github.sha }} 
+                --ports 80 
+                --registry-username ${{ secrets.DOCKER_USERNAME }} 
+                --registry-password ${{ secrets.DOCKER_PASSWORD }} 
                 --location polandcentral
 
       - name: 'Deploy to Azure Container Instances'
