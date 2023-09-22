@@ -23,13 +23,16 @@ jobs:
         with:
           creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.ARM_TENANT_ID }}"}'
 
-      - uses: azure/docker-login@v1
+      - name: "Login to ACR"
+        uses: azure/docker-login@v1
         with:
             login-server: jptrackbymyduckdevcr.azurecr.io
             username: ${{ secrets.DOCKER_USERNAME }}
             password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker Image
+        env: 
+            REACT_APP_API_URL: "https://jp-trackbymyduck-dev-api-test.azurewebsites.net"
         run: |
             docker build -t jptrackbymyduckdevcr.azurecr.io/app:latest .
         working-directory: ./front
@@ -39,12 +42,12 @@ jobs:
             docker push jptrackbymyduckdevcr.azurecr.io/app:latest
         working-directory: ./front
 
-      - name: Build the frontend image and push it to ACR
-        uses: docker/build-push-action@v5
+    #   - name: Build the frontend image and push it to ACR
+    #     uses: docker/build-push-action@v5
         
-        with:
-          push: true
-          tags: jptrackbymyduckdevcr.azurecr.io
-          file: front/Dockerfile
-          context: "./front"
+    #     with:
+    #       push: true
+    #       tags: jptrackbymyduckdevcr.azurecr.io
+    #       file: front/Dockerfile
+    #       context: "./front"
           
