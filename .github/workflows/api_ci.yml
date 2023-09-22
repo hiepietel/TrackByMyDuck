@@ -1,10 +1,9 @@
-name: Build and deploy .NET Core application to Web App TrackByMyDuck20230919160636
+name: api // Build and deploy api to Web App 
 on:
   push:
     branches:
     - sprint_two
 env:
-  AZURE_WEBAPP_NAME: TrackByMyDuck20230919160636
   AZURE_WEBAPP_PACKAGE_PATH: TrackByMyDuck/published
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 6.0.x
